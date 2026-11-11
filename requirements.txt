@@ -1,0 +1,2 @@
+playwright
+claude-agent-sdk
