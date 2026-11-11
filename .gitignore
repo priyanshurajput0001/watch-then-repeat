@@ -3,3 +3,5 @@ logs/
 artifacts/
 .venv/
 .env
+.DS_Store
+recordings/*/trace/
