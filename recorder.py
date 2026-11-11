@@ -1,136 +1,322 @@
-"""Watch once: drive the saucedemo checkout with sync Playwright, save artifacts/steps.json + state.json."""
+"""recorder.py - turn a Playwright run into OBSERVED steps and a skill file.
+
+Sync Playwright API. Usage:
+
+    pw.selectors.set_test_id_attribute("data-test")   # saucedemo uses data-test
+    ctx = browser.new_context()
+    rec = Observer(ctx)            # BEFORE ctx.new_page()
+    page = ctx.new_page()
+    with rec.intent("Log in with the demo user"):
+        ...drive the page...
+    steps = rec.finish(page)       # list[dict], derived from observed events
+    Path("skills/x.md").write_text(render_skill(steps, ...))
+"""
 import json
-import re
+from contextlib import contextmanager
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
+# --------------------------------------------------------------------------
+# Browser side: listens for real events, describes the element, snapshots state
+# --------------------------------------------------------------------------
+INIT_JS = r"""
+(() => {
+  if (window.__rec_installed) return;
+  window.__rec_installed = true;
+  const clean = s => (s || '').replace(/\s+/g, ' ').trim().slice(0, 80);
+  const IMPLICIT = {BUTTON: 'button', SELECT: 'combobox', TEXTAREA: 'textbox'};
+  const TEXTLESS = ['checkbox', 'radio', 'button', 'submit', 'reset'];
 
-BASE = "https://www.saucedemo.com"
-STEPS = Path("artifacts/steps.json")
-STATE = Path("artifacts/state.json")
+  const role = el => {
+    const r = el.getAttribute('role'); if (r) return r;
+    if (el.tagName === 'INPUT') {
+      const t = (el.type || 'text').toLowerCase();
+      if (['button', 'submit', 'reset'].includes(t)) return 'button';
+      return {checkbox: 'checkbox', radio: 'radio'}[t] || 'textbox';
+    }
+    if (el.tagName === 'A' && el.hasAttribute('href')) return 'link';
+    return IMPLICIT[el.tagName] || null;
+  };
+  const label = el => (el.labels && el.labels[0]) ? clean(el.labels[0].innerText)
+                      : clean(el.getAttribute('aria-label'));
+  const accName = el => clean(
+    el.getAttribute('aria-label') ||
+    (el.labels && el.labels[0] && el.labels[0].innerText) ||
+    (el.tagName === 'INPUT' && ['button', 'submit', 'reset'].includes(el.type) ? el.value : '') ||
+    el.innerText || el.getAttribute('title'));
+
+  window.__describe = el => ({
+    tag: el.tagName.toLowerCase(),
+    testid: el.getAttribute('data-test'),
+    role: role(el), name: accName(el), label: label(el),
+    placeholder: el.getAttribute('placeholder'),
+    text: clean(el.innerText), id: el.id || null,
+  });
+
+  // Visible short text of every [data-test] element (first one per key).
+  window.__snapshot = () => {
+    const texts = {};
+    document.querySelectorAll('[data-test]').forEach(el => {
+      if (['BUTTON', 'INPUT'].includes(el.tagName) || !el.getClientRects().length) return;
+      const k = el.getAttribute('data-test'), t = clean(el.innerText);
+      if (t && !(k in texts)) texts[k] = t;
+    });
+    return {url: location.pathname, texts};
+  };
+
+  const send = (action, el, value, shown) => {
+    try {
+      window.__rec({action, desc: window.__describe(el), value: value ?? null,
+                    shown: shown ?? null, before: window.__snapshot()});
+    } catch (_) {}
+  };
+  const target = e => e.target.closest(
+    'button,a[href],input,select,textarea,[role=button],[data-test]') || e.target;
+
+  // capture phase => runs BEFORE the app's handlers, so `before` is the pre-action DOM
+  document.addEventListener('click', e => {
+    const el = target(e);
+    if (['SELECT', 'OPTION', 'TEXTAREA'].includes(el.tagName)) return;
+    if (el.tagName === 'INPUT' && !TEXTLESS.includes(el.type)) return;  // focus click
+    send('click', el);
+  }, true);
+  document.addEventListener('input', e => {
+    const el = e.target;
+    if (el.tagName === 'TEXTAREA' ||
+        (el.tagName === 'INPUT' && !TEXTLESS.includes(el.type))) send('fill', el, el.value);
+  }, true);
+  document.addEventListener('change', e => {
+    const el = e.target;
+    if (el.tagName === 'SELECT')
+      send('select', el, el.value, el.selectedOptions[0] && el.selectedOptions[0].text);
+  }, true);
+})();
+"""
 
 
-def _check(cond, msg):
-    if not cond:
-        raise AssertionError(msg)
+# --------------------------------------------------------------------------
+# Locator priority: data-test > role+name > label > placeholder > text > css id
+# --------------------------------------------------------------------------
+def _q(s):
+    return json.dumps(s)
 
 
-def record() -> dict:
-    """Run the full checkout once. Saves the logged-in (empty-cart) session and the step script."""
-    with sync_playwright() as pw:
-        pw.selectors.set_test_id_attribute("data-test")
-        browser = pw.chromium.launch(headless=False)
-        page = browser.new_context().new_page()
-        page.set_default_timeout(10_000)
+def pick_locators(d):
+    """Return Playwright locator expressions, most stable first."""
+    out = []
+    if d.get("testid"):
+        out.append(f'get_by_test_id({_q(d["testid"])})')
+    if d.get("role") and d.get("name"):
+        out.append(f'get_by_role({_q(d["role"])}, name={_q(d["name"])}, exact=True)')
+    if d.get("label"):
+        out.append(f'get_by_label({_q(d["label"])}, exact=True)')
+    if d.get("placeholder"):
+        out.append(f'get_by_placeholder({_q(d["placeholder"])}, exact=True)')
+    if d.get("text") and len(d["text"]) <= 40:
+        out.append(f'get_by_text({_q(d["text"])}, exact=True)')
+    if d.get("id"):
+        out.append(f'locator({_q("#" + d["id"])})')  # last resort
+    return out
 
-        # 1-2: fresh login
-        page.goto(BASE)
+
+def derive_checks(step):
+    """Checks come from diffing observed before/after state, not hand-written."""
+    before, after = step["before"], step["after"]
+    checks = []
+    if step["action"] == "fill":
+        checks.append({"type": "value", "value": step["value"]})
+    if step["action"] == "read":
+        return [{"type": "nonempty"}]
+    if after["url"] != before["url"]:
+        checks.append({"type": "url", "value": after["url"]})
+    for k, v in after["texts"].items():
+        if before["texts"].get(k) != v:
+            checks.append({"type": "text", "testid": k, "value": v})
+    return checks[:5]
+
+
+# --------------------------------------------------------------------------
+# Python side
+# --------------------------------------------------------------------------
+class Observer:
+    def __init__(self, context):
+        self.raw = []
+        self._intent = None
+        context.expose_binding("__rec", self._on_event)  # must precede new_page()
+        context.add_init_script(INIT_JS)
+
+    @contextmanager
+    def intent(self, text):
+        """Label what the demonstrator is trying to do; attached to events inside."""
+        self._intent = text
+        try:
+            yield
+        finally:
+            self._intent = None
+
+    def _on_event(self, source, p):
+        p["intent"] = self._intent
+        last = self.raw[-1] if self.raw else None
+        # coalesce keystrokes into one fill per field
+        if (p["action"] == "fill" and last and last["action"] == "fill"
+                and last["desc"] == p["desc"]):
+            last["value"] = p["value"]
+            return
+        self.raw.append(p)
+
+    def read(self, label, locator):
+        """Record a read-a-value step (e.g. the order total)."""
+        page = locator.page
+        desc = locator.evaluate("el => window.__describe(el)")
+        snap = page.evaluate("window.__snapshot()")
+        self.raw.append({"action": "read", "desc": desc, "value": locator.inner_text().strip(),
+                         "shown": label, "before": snap, "intent": self._intent})
+
+    def finish(self, page):
+        final = page.evaluate("window.__snapshot()")
+        steps = []
+        for i, e in enumerate(self.raw):
+            if e["action"] == "read":
+                after = e["before"]
+            else:  # state after step i == state seen right before step i+1
+                after = self.raw[i + 1]["before"] if i + 1 < len(self.raw) else final
+            s = {**e, "n": i + 1, "after": after}
+            s["locators"] = pick_locators(e["desc"])
+            s["checks"] = derive_checks(s)
+            steps.append(s)
+        return steps
+
+
+# --------------------------------------------------------------------------
+# Skill renderer
+# --------------------------------------------------------------------------
+def _target(d):
+    return d.get("name") or d.get("label") or d.get("placeholder") or d.get("testid") or d["tag"]
+
+
+def _check_line(c):
+    if c["type"] == "url":
+        return f'URL path is `{c["value"]}`'
+    if c["type"] == "text":
+        return f'`[data-test="{c["testid"]}"]` shows "{c["value"]}"'
+    if c["type"] == "value":
+        return f'field holds `{c["value"]}`'
+    return "value is non-empty"
+
+
+def _step_line(s):
+    t, v = _target(s["desc"]), s["value"]
+    return {
+        "click": f"Click **{t}**",
+        "fill": f"Fill **{t}** with `{v}`",
+        "select": f'Select "{s["shown"]}" (value `{v}`) in **{t}**',
+        "read": f'Read **{s["shown"]}** with `inner_text()` and keep it as the result: `{v}`',
+    }[s["action"]]
+
+
+def render_skill(steps, start_url, state_path, title="Workflow", result_name="order total"):
+    login_n = 0  # leading steps that happen on the start page => skipped if session valid
+    for s in steps:
+        if s["before"]["url"] == steps[0]["before"]["url"]:
+            login_n += 1
+        else:
+            break
+    L = [f"# Skill: {title}", "",
+         "## Goal", f"Replay the recorded workflow and return the **{result_name}**.", "",
+         "## Preconditions",
+         f"- Start URL: `{start_url}`",
+         f"- Saved session: `{state_path}` (storage state captured right after login, "
+         "before any cart changes).",
+         f"- If the session is valid, open the site with it and **skip steps 1-{login_n}** (login).",
+         "- A **fresh login is needed** when: the state file is missing, or opening a protected "
+         "page redirects to the login page, or the login form is visible. Then run steps "
+         f"1-{login_n} and re-save the session.",
+         "- Cart must be empty before step "
+         f"{login_n + 1}. Only ever allow navigation within the start URL's domain.", "",
+         "## Steps", "Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order.", ""]
+    for s in steps:
+        L.append(f'{s["n"]}. {_step_line(s)}' + (f' _(intent: {s["intent"]})_' if s["intent"] else ""))
+        for i, loc in enumerate(s["locators"]):
+            L.append(f'   - {"Locator" if i == 0 else "Fallback"}: `page.{loc}`')
+        for c in s["checks"]:
+            L.append(f"   - Check: {_check_line(c)}")
+        L.append("")
+    L += ["## When a check fails",
+          "1. Re-run the step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).",
+          "2. If the URL is the login page, the session expired: do a fresh login, re-save the session, "
+          "restart from the first non-login step.",
+          "3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, "
+          "the expected check and what the page actually shows.",
+          "4. Never navigate outside the allowed domain."]
+    return "\n".join(L) + "\n"
+
+
+# --------------------------------------------------------------------------
+# Demo: scripted demonstrator for saucedemo (replaces your hardcoded step list)
+# --------------------------------------------------------------------------
+def demonstrate(page, ctx, rec, state_path):
+    START = "https://www.saucedemo.com/"
+    page.goto(START)
+    with rec.intent("Log in with the demo user shown on the login page"):
         page.get_by_test_id("username").fill("standard_user")
         page.get_by_test_id("password").fill("secret_sauce")
         page.get_by_test_id("login-button").click()
         page.wait_for_url("**/inventory.html")
-        _check(page.get_by_test_id("title").inner_text() == "Products", "no Products header after login")
-
-        # 3: sort by price (low to high)
+    ctx.storage_state(path=state_path)  # save NOW: later the cart lives in localStorage
+    with rec.intent("Sort products by price, low to high"):
         page.get_by_test_id("product-sort-container").select_option("lohi")
-        prices = page.get_by_test_id("inventory-item-price").all_inner_texts()
-        floats = [float(p.strip().replace("$", "")) for p in prices]
-        _check(floats == sorted(floats) and floats[0] == 7.99, f"bad sort order: {floats}")
-
-        # 4: the two cheapest
-        names = page.get_by_test_id("inventory-item-name").all_inner_texts()
-        _check(names[:2] == ["Sauce Labs Onesie", "Sauce Labs Bike Light"], f"unexpected top items: {names[:2]}")
-
-        # 5: add them to the cart
-        page.get_by_test_id("add-to-cart-sauce-labs-onesie").click()
-        page.get_by_test_id("add-to-cart-sauce-labs-bike-light").click()
-        _check(page.get_by_test_id("shopping-cart-badge").inner_text() == "2", "cart badge != 2")
-
-        # 6: cart -> checkout -> made-up details
+    with rec.intent("Add the two cheapest items (first two after sorting)"):
+        items = page.get_by_test_id("inventory-item")
+        for i in range(2):
+            items.nth(i).get_by_role("button", name="Add to cart").click()
+    with rec.intent("Open the cart and start checkout"):
         page.get_by_test_id("shopping-cart-link").click()
         page.get_by_test_id("checkout").click()
-        page.get_by_test_id("firstName").fill("Priya")
-        page.get_by_test_id("lastName").fill("Demo")
-        page.get_by_test_id("postalCode").fill("94103")
+    with rec.intent("Enter made-up checkout details"):
+        page.get_by_test_id("firstName").fill("Test")
+        page.get_by_test_id("lastName").fill("User")
+        page.get_by_test_id("postalCode").fill("12345")
         page.get_by_test_id("continue").click()
-        page.wait_for_url("**/checkout-step-two.html")
-
-        # 7: order total on the overview page
-        raw = page.get_by_test_id("total-label").inner_text()
-        m = re.search(r"\$\d+\.\d\d", raw)
-        _check(m, f"no dollar total in {raw!r}")
-        total = m.group()
-
-        # 8: finish + confirmation
+    with rec.intent("Read the order total on the overview page"):
+        rec.read("order total", page.get_by_test_id("total-label"))
+    with rec.intent("Finish the order and confirm the thank-you page"):
         page.get_by_test_id("finish").click()
-        _check("thank you" in page.get_by_test_id("complete-header").inner_text().lower(),
-               "no thank-you header after finish")
+        page.get_by_test_id("complete-header").wait_for()
+    return START
 
-        # session state AFTER checkout = logged in with an empty cart
-        page.context.storage_state(path=str(STATE))
+
+REC_DIR = Path("recordings/saucedemo_checkout")
+STATE = "artifacts/state.json"
+SKILL = Path("skills/saucedemo_checkout.md")
+
+
+def record(state_path: str = STATE) -> dict:
+    """One scripted demonstrator run, OBSERVED. Writes recordings/, the skill, and saves
+    the storage state right after login (before any cart change)."""
+    from playwright.sync_api import sync_playwright
+
+    REC_DIR.mkdir(parents=True, exist_ok=True)
+    Path(state_path).parent.mkdir(exist_ok=True)
+    SKILL.parent.mkdir(exist_ok=True)
+
+    with sync_playwright() as pw:
+        pw.selectors.set_test_id_attribute("data-test")
+        browser = pw.chromium.launch()
+        ctx = browser.new_context()
+        ctx.tracing.start(screenshots=True, snapshots=True)
+        rec = Observer(ctx)
+        page = ctx.new_page()
+        start = demonstrate(page, ctx, rec, state_path)
+        steps = rec.finish(page)
+        ctx.tracing.stop(path=str(REC_DIR / "trace.zip"))
         browser.close()
 
-    steps = [
-        {"n": 1, "title": "Log in",
-         "action": "browser_goto https://www.saucedemo.com, browser_fill test id `username` with "
-                   "standard_user, browser_fill test id `password` with secret_sauce, then "
-                   "browser_click test id `login-button`.",
-         "locator": "test id `username`, test id `password`, test id `login-button`",
-         "check": "browser_url ends with /inventory.html",
-         "on_fail": "browser_goto https://www.saucedemo.com once more and retry the login; if the "
-                    "URL still is not /inventory.html, report FAILED: step 1."},
-        {"n": 2, "title": "Confirm the inventory page",
-         "action": "browser_read_text test id `title`.",
-         "locator": "test id `title`",
-         "check": "The text is exactly `Products`.",
-         "on_fail": "Retry browser_read_text once; if it is still not `Products`, report FAILED: step 2."},
-        {"n": 3, "title": "Sort by price (low to high)",
-         "action": "browser_select on the product sort dropdown, choosing exactly the option named "
-                   "in the Locator below.",
-         "locator": "test id `product-sort-container` - option `lohi` (Price: low to high)",
-         "check": "browser_all_texts on test id `inventory-item-price` returns prices in ascending "
-                  "order, and the first two are `$7.99` and `$9.99`.",
-         "on_fail": "Re-select the option and re-read the prices once; if they are still not ascending, "
-                    "report FAILED: step 3."},
-        {"n": 4, "title": "Identify the two cheapest items",
-         "action": "browser_all_texts on test id `inventory-item-name`.",
-         "locator": "test id `inventory-item-name`",
-         "check": "The first two names are `Sauce Labs Onesie` and `Sauce Labs Bike Light`.",
-         "on_fail": "Report FAILED: step 4 - unexpected item order."},
-        {"n": 5, "title": "Add the two cheapest items to the cart",
-         "action": "browser_click test id `add-to-cart-sauce-labs-onesie`, then browser_click test id "
-                   "`add-to-cart-sauce-labs-bike-light`.",
-         "locator": "test id `add-to-cart-sauce-labs-onesie`, test id `add-to-cart-sauce-labs-bike-light`",
-         "check": "browser_read_text on test id `shopping-cart-badge` returns `2`.",
-         "on_fail": "Re-click whichever add button had no effect, re-read the badge once; if it is still "
-                    "not `2`, report FAILED: step 5."},
-        {"n": 6, "title": "Cart, checkout, made-up details",
-         "action": "browser_click test id `shopping-cart-link`, then browser_click test id `checkout`. "
-                   "browser_fill test id `firstName` with `Priya`, test id `lastName` with `Demo`, "
-                   "test id `postalCode` with `94103`, then browser_click test id `continue`.",
-         "locator": "test id `shopping-cart-link`, test id `checkout`, test id `firstName`, "
-                    "test id `lastName`, test id `postalCode`, test id `continue`",
-         "check": "browser_url ends with /checkout-step-two.html",
-         "on_fail": "Re-fill any field the page complained about and click `continue` once more; if the "
-                    "URL still is not /checkout-step-two.html, report FAILED: step 6."},
-        {"n": 7, "title": "Read the order total",
-         "action": "browser_read_text test id `total-label`.",
-         "locator": "test id `total-label`",
-         "check": "The text contains `Total: $` followed by an amount, e.g. `Total: $19.42`.",
-         "on_fail": "Re-read once; if there is still no dollar amount, report FAILED: step 7."},
-        {"n": 8, "title": "Finish and confirm",
-         "action": "browser_click test id `finish`, then browser_read_text test id `complete-header`.",
-         "locator": "test id `finish`, test id `complete-header`",
-         "check": "The header contains `Thank you for your order`.",
-         "on_fail": "Re-read once; if the header is still missing, report FAILED: step 8."},
-    ]
-    STEPS.parent.mkdir(exist_ok=True)
-    STEPS.write_text(json.dumps({"steps": steps}, indent=2))
-    return {"total": total, "steps_recorded": len(steps), "state": str(STATE)}
+    (REC_DIR / "steps.json").write_text(json.dumps(steps, indent=2))
+    SKILL.write_text(render_skill(steps, start, state_path, title="Saucedemo checkout"))
+    totals = [s["value"] for s in steps if s["action"] == "read"]
+    return {"steps": len(steps), "total": totals[-1] if totals else None,
+            "skill": str(SKILL), "recording": str(REC_DIR), "state": state_path}
 
 
 if __name__ == "__main__":
     r = record()
-    print(f"recorded {r['steps_recorded']} steps -> {STEPS}")
-    print(f"session -> {r['state']}")
-    print("recorded total:", r["total"])
+    print(f"wrote {r['recording']}/ ({r['steps']} steps, total {r['total']}) and {r['skill']}")
