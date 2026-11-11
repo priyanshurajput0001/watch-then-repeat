@@ -1,4 +1,4 @@
-"""PreToolUse hook: log every tool call; block navigation outside saucedemo.com; limit Read to skills/*.md."""
+"""PreToolUse hook: log every tool call; block navigation outside saucedemo.com; limit Read to skills/*.md and tests/fixtures/*.md."""
 import json
 import time
 from pathlib import Path
@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 LOG = Path("logs/tool_calls.jsonl")
 SKILLS = Path("skills").resolve()
+FIXTURES = Path("tests/fixtures").resolve()
 
 
 def _deny(reason):
@@ -31,8 +32,8 @@ async def log_and_guard(input_data, tool_use_id, context):
         decision = _deny(f"Blocked: navigation outside saucedemo.com ({inp.get('url')})")
     elif name == "Read":
         p = Path(str(inp.get("file_path", ""))).resolve()
-        if not (p.suffix == ".md" and SKILLS in p.parents):
-            decision = _deny("Blocked: the agent may only read files in skills/*.md")
+        if not (p.suffix == ".md" and (SKILLS in p.parents or FIXTURES in p.parents)):
+            decision = _deny("Blocked: the agent may only read .md files in skills/ or tests/fixtures/")
 
     with open(LOG, "a") as f:
         f.write(json.dumps({"t": time.time(), "tool": name, "input": inp,

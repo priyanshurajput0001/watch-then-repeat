@@ -4,7 +4,7 @@ from pathlib import Path
 
 from replayer import DEFAULT_SKILL, replay
 
-TAMPERED = "skills/saucedemo_checkout_tampered.md"
+TAMPERED = "tests/fixtures/saucedemo_checkout_tampered.md"
 
 
 async def main():
@@ -16,8 +16,10 @@ async def main():
     print("PASS 1 (same total twice):", totals[0] is not None and totals[0] == totals[1])
 
     text = Path(DEFAULT_SKILL).read_text()
-    bad = text.replace("`lohi` (Price: low to high)", "`hilo` (Price: high to low)")
+    bad = text.replace('Select "Price (low to high)" (value `lohi`)',
+                       'Select "Price (high to low)" (value `hilo`)')
     assert bad != text, "tamper target not found; check the sort step text in the skill"
+    Path(TAMPERED).parent.mkdir(parents=True, exist_ok=True)
     Path(TAMPERED).write_text(bad)
     r = await replay(TAMPERED)
     print(f"tampered: total={r['total']} failed={r['failed']}")
