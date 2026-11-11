@@ -1,76 +1,144 @@
-# Skill: Buy the two cheapest items on saucedemo.com
+# Skill: Saucedemo checkout
 
 ## Goal
-Log in with the demo user, sort by price (low to high), add the two cheapest items, check out with made-up details, read the order total from the overview page, finish, and confirm the thank-you page. Return the order total.
+Replay the recorded workflow and return the **order total**.
 
 ## Preconditions
-- Only https://www.saucedemo.com is allowed. Never navigate anywhere else.
-- Demo credentials only (shown on the login page). No real accounts.
-- The cart must be empty at the start. A fresh browser session guarantees that.
-
-## Session
-- The recorder saved a logged-in session to `artifacts/state.json`.
-- To start from it, call `browser_load_session`, then `browser_goto` to `https://www.saucedemo.com/inventory.html`, then continue at step 3.
-- **A fresh login is needed** (do steps 1-2) if there is no saved session, or if `/inventory.html` redirects to the login page.
-- If you start without a saved session, begin at step 1.
-
-## Tool guide
-- `kind` is one of `test_id`, `role`, `label`, `text`. For `role`, put the role in `value` and the accessible name in `name`. Pass `name=""` and `nth=0` when unused.
-- A locator like "test id `login-button`" means `kind=test_id, value=login-button`.
-- Tools wait for elements automatically. Never guess a CSS path.
-- Check URLs with `browser_url`, text with `browser_read_text`, lists with `browser_all_texts`.
+- Start URL: `https://www.saucedemo.com/`
+- Saved session: `artifacts/state.json` (storage state captured right after login, before any cart changes).
+- If the session is valid, open the site with it and **skip steps 1-3** (login).
+- A **fresh login is needed** when: the state file is missing, or opening a protected page redirects to the login page, or the login form is visible. Then run steps 1-3 and re-save the session.
+- Cart must be empty before step 4. Only ever allow navigation within the start URL's domain.
 
 ## Steps
-### Step 1: Log in
-- **Do:** browser_goto https://www.saucedemo.com, browser_fill test id `username` with standard_user, browser_fill test id `password` with secret_sauce, then browser_click test id `login-button`.
-- **Locator:** test id `username`, test id `password`, test id `login-button`
-- **Check:** browser_url ends with /inventory.html
-- **If the check fails:** browser_goto https://www.saucedemo.com once more and retry the login; if the URL still is not /inventory.html, report FAILED: step 1.
+Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order.
 
-### Step 2: Confirm the inventory page
-- **Do:** browser_read_text test id `title`.
-- **Locator:** test id `title`
-- **Check:** The text is exactly `Products`.
-- **If the check fails:** Retry browser_read_text once; if it is still not `Products`, report FAILED: step 2.
+1. Fill **Username** with `standard_user` _(intent: Log in with the demo user shown on the login page)_
+   - Locator: `page.get_by_test_id("username")`
+   - Fallback: `page.get_by_role("textbox", name="Username", exact=True)`
+   - Fallback: `page.get_by_label("Username", exact=True)`
+   - Fallback: `page.get_by_placeholder("Username", exact=True)`
+   - Fallback: `page.locator("#user-name")`
+   - Check: field holds `standard_user`
 
-### Step 3: Sort by price (low to high)
-- **Do:** browser_select on the product sort dropdown, choosing exactly the option named in the Locator below.
-- **Locator:** test id `product-sort-container` - option `lohi` (Price: low to high)
-- **Check:** browser_all_texts on test id `inventory-item-price` returns prices in ascending order, and the first two are `$7.99` and `$9.99`.
-- **If the check fails:** Re-select the option and re-read the prices once; if they are still not ascending, report FAILED: step 3.
+2. Fill **Password** with `secret_sauce` _(intent: Log in with the demo user shown on the login page)_
+   - Locator: `page.get_by_test_id("password")`
+   - Fallback: `page.get_by_role("textbox", name="Password", exact=True)`
+   - Fallback: `page.get_by_label("Password", exact=True)`
+   - Fallback: `page.get_by_placeholder("Password", exact=True)`
+   - Fallback: `page.locator("#password")`
+   - Check: field holds `secret_sauce`
 
-### Step 4: Identify the two cheapest items
-- **Do:** browser_all_texts on test id `inventory-item-name`.
-- **Locator:** test id `inventory-item-name`
-- **Check:** The first two names are `Sauce Labs Onesie` and `Sauce Labs Bike Light`.
-- **If the check fails:** Report FAILED: step 4 - unexpected item order.
+3. Click **Login** _(intent: Log in with the demo user shown on the login page)_
+   - Locator: `page.get_by_test_id("login-button")`
+   - Fallback: `page.get_by_role("button", name="Login", exact=True)`
+   - Fallback: `page.locator("#login-button")`
+   - Check: URL path is `/inventory.html`
+   - Check: `[data-test="header-container"]` shows "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
+   - Check: `[data-test="primary-header"]` shows "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
+   - Check: `[data-test="inventory-sidebar-link"]` shows "All Items"
+   - Check: `[data-test="dynamic-catalog-sidebar-link"]` shows "Dynamic Catalog"
 
-### Step 5: Add the two cheapest items to the cart
-- **Do:** browser_click test id `add-to-cart-sauce-labs-onesie`, then browser_click test id `add-to-cart-sauce-labs-bike-light`.
-- **Locator:** test id `add-to-cart-sauce-labs-onesie`, test id `add-to-cart-sauce-labs-bike-light`
-- **Check:** browser_read_text on test id `shopping-cart-badge` returns `2`.
-- **If the check fails:** Re-click whichever add button had no effect, re-read the badge once; if it is still not `2`, report FAILED: step 5.
+4. Select "Price (low to high)" (value `lohi`) in **Sort products** _(intent: Sort products by price, low to high)_
+   - Locator: `page.get_by_test_id("product-sort-container")`
+   - Fallback: `page.get_by_role("combobox", name="Sort products", exact=True)`
+   - Fallback: `page.get_by_label("Sort products", exact=True)`
+   - Check: `[data-test="secondary-header"]` shows "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri"
+   - Check: `[data-test="active-option"]` shows "Price (low to high)"
+   - Check: `[data-test="inventory-container"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+   - Check: `[data-test="inventory-list"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+   - Check: `[data-test="inventory-item"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
 
-### Step 6: Cart, checkout, made-up details
-- **Do:** browser_click test id `shopping-cart-link`, then browser_click test id `checkout`. browser_fill test id `firstName` with `Priya`, test id `lastName` with `Demo`, test id `postalCode` with `94103`, then browser_click test id `continue`.
-- **Locator:** test id `shopping-cart-link`, test id `checkout`, test id `firstName`, test id `lastName`, test id `postalCode`, test id `continue`
-- **Check:** browser_url ends with /checkout-step-two.html
-- **If the check fails:** Re-fill any field the page complained about and click `continue` once more; if the URL still is not /checkout-step-two.html, report FAILED: step 6.
+5. Click **Add to cart** _(intent: Add the two cheapest items (first two after sorting))_
+   - Locator: `page.get_by_test_id("add-to-cart-sauce-labs-onesie")`
+   - Fallback: `page.get_by_role("button", name="Add to cart", exact=True)`
+   - Fallback: `page.get_by_text("Add to cart", exact=True)`
+   - Fallback: `page.locator("#add-to-cart-sauce-labs-onesie")`
+   - Check: `[data-test="shopping-cart-link"]` shows "1"
+   - Check: `[data-test="shopping-cart-badge"]` shows "1"
 
-### Step 7: Read the order total
-- **Do:** browser_read_text test id `total-label`.
-- **Locator:** test id `total-label`
-- **Check:** The text contains `Total: $` followed by an amount, e.g. `Total: $19.42`.
-- **If the check fails:** Re-read once; if there is still no dollar amount, report FAILED: step 7.
+6. Click **Add to cart** _(intent: Add the two cheapest items (first two after sorting))_
+   - Locator: `page.get_by_test_id("add-to-cart-sauce-labs-bike-light")`
+   - Fallback: `page.get_by_role("button", name="Add to cart", exact=True)`
+   - Fallback: `page.get_by_text("Add to cart", exact=True)`
+   - Fallback: `page.locator("#add-to-cart-sauce-labs-bike-light")`
+   - Check: `[data-test="shopping-cart-link"]` shows "2"
+   - Check: `[data-test="shopping-cart-badge"]` shows "2"
 
-### Step 8: Finish and confirm
-- **Do:** browser_click test id `finish`, then browser_read_text test id `complete-header`.
-- **Locator:** test id `finish`, test id `complete-header`
-- **Check:** The header contains `Thank you for your order`.
-- **If the check fails:** Re-read once; if the header is still missing, report FAILED: step 8.
+7. Click **Cart, 2 items** _(intent: Open the cart and start checkout)_
+   - Locator: `page.get_by_test_id("shopping-cart-link")`
+   - Fallback: `page.get_by_role("button", name="Cart, 2 items", exact=True)`
+   - Fallback: `page.get_by_label("Cart, 2 items", exact=True)`
+   - Fallback: `page.get_by_text("2", exact=True)`
+   - Check: URL path is `/cart.html`
+   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Your Cart"
+   - Check: `[data-test="primary-header"]` shows "Open Menu Swag Labs 2"
+   - Check: `[data-test="secondary-header"]` shows "Your Cart"
+   - Check: `[data-test="title"]` shows "Your Cart"
 
-## If any step fails
-Stop. Reply exactly `FAILED: step N - <what you saw>`. Do not continue and do not guess.
+8. Click **Checkout** _(intent: Open the cart and start checkout)_
+   - Locator: `page.get_by_test_id("checkout")`
+   - Fallback: `page.get_by_role("button", name="Checkout", exact=True)`
+   - Fallback: `page.get_by_text("Checkout", exact=True)`
+   - Fallback: `page.locator("#checkout")`
+   - Check: URL path is `/checkout-step-one.html`
+   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Checkout: Your Information"
+   - Check: `[data-test="secondary-header"]` shows "Checkout: Your Information"
+   - Check: `[data-test="title"]` shows "Checkout: Your Information"
+   - Check: `[data-test="checkout-info-container"]` shows "Cancel"
 
-## Output
-Reply with exactly one final line: `ORDER_TOTAL: $xx.xx` (the total from step 7).
+9. Fill **First Name** with `Test` _(intent: Enter made-up checkout details)_
+   - Locator: `page.get_by_test_id("firstName")`
+   - Fallback: `page.get_by_role("textbox", name="First Name", exact=True)`
+   - Fallback: `page.get_by_label("First Name", exact=True)`
+   - Fallback: `page.get_by_placeholder("First Name", exact=True)`
+   - Fallback: `page.locator("#first-name")`
+   - Check: field holds `Test`
+
+10. Fill **Last Name** with `User` _(intent: Enter made-up checkout details)_
+   - Locator: `page.get_by_test_id("lastName")`
+   - Fallback: `page.get_by_role("textbox", name="Last Name", exact=True)`
+   - Fallback: `page.get_by_label("Last Name", exact=True)`
+   - Fallback: `page.get_by_placeholder("Last Name", exact=True)`
+   - Fallback: `page.locator("#last-name")`
+   - Check: field holds `User`
+
+11. Fill **Zip/Postal Code** with `12345` _(intent: Enter made-up checkout details)_
+   - Locator: `page.get_by_test_id("postalCode")`
+   - Fallback: `page.get_by_role("textbox", name="Zip/Postal Code", exact=True)`
+   - Fallback: `page.get_by_label("Zip/Postal Code", exact=True)`
+   - Fallback: `page.get_by_placeholder("Zip/Postal Code", exact=True)`
+   - Fallback: `page.locator("#postal-code")`
+   - Check: field holds `12345`
+
+12. Click **Continue** _(intent: Enter made-up checkout details)_
+   - Locator: `page.get_by_test_id("continue")`
+   - Fallback: `page.get_by_role("button", name="Continue", exact=True)`
+   - Fallback: `page.locator("#continue")`
+   - Check: URL path is `/checkout-step-two.html`
+   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Checkout: Overview"
+   - Check: `[data-test="secondary-header"]` shows "Checkout: Overview"
+   - Check: `[data-test="title"]` shows "Checkout: Overview"
+   - Check: `[data-test="checkout-summary-container"]` shows "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat"
+
+13. Read **order total** with `inner_text()` and keep it as the result: `Total: $19.42` _(intent: Read the order total on the overview page)_
+   - Locator: `page.get_by_test_id("total-label")`
+   - Fallback: `page.get_by_text("Total: $19.42", exact=True)`
+   - Check: value is non-empty
+
+14. Click **Finish** _(intent: Finish the order and confirm the thank-you page)_
+   - Locator: `page.get_by_test_id("finish")`
+   - Fallback: `page.get_by_role("button", name="Finish", exact=True)`
+   - Fallback: `page.get_by_text("Finish", exact=True)`
+   - Fallback: `page.locator("#finish")`
+   - Check: URL path is `/checkout-complete.html`
+   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs Checkout: Complete!"
+   - Check: `[data-test="primary-header"]` shows "Open Menu Swag Labs"
+   - Check: `[data-test="secondary-header"]` shows "Checkout: Complete!"
+   - Check: `[data-test="title"]` shows "Checkout: Complete!"
+
+## When a check fails
+1. Re-run the step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).
+2. If the URL is the login page, the session expired: do a fresh login, re-save the session, restart from the first non-login step.
+3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, the expected check and what the page actually shows.
+4. Never navigate outside the allowed domain.
