@@ -7,7 +7,6 @@ from claude_agent_sdk import (ClaudeAgentOptions, ClaudeSDKClient, HookMatcher,
 from hooks import log_and_guard
 from recorder import record
 from replayer import DEFAULT_SKILL, replay
-from skill_gen import generate
 
 
 def _ok(t):
@@ -17,8 +16,7 @@ def _ok(t):
 @tool("record_workflow", "Record the saucedemo checkout once and generate the skill file.", {})
 async def record_workflow(args):
     result = await asyncio.to_thread(record)   # sync Playwright runs in a worker thread
-    path = generate()
-    return _ok(f"recorded; skill file at {path}; recorded total {result['total']}")
+    return _ok(f"recorded; skill file at {result['skill']}; recorded total {result['total']}")
 
 
 @tool("replay_workflow", "Replay a skill file with the agent. Pass skill_path ('' for default).", {"skill_path": str})
