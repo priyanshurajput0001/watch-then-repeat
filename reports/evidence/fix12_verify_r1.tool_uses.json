@@ -1,0 +1,259 @@
+[
+  {
+    "tool": "Read",
+    "input": {
+      "file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"
+    }
+  },
+  {
+    "tool": "ToolSearch",
+    "input": {
+      "query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_url,mcp__browser__browser_all_texts",
+      "max_results": 8
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_load_session",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_goto",
+    "input": {
+      "url": "https://www.saucedemo.com/inventory.html"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_url",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "css",
+      "value": "[data-test=\"inventory-list\"]",
+      "name": "inventory list"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory list",
+      "value": "inventory-list"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "name": "cart badge",
+      "value": "shopping-cart-badge"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_select",
+    "input": {
+      "kind": "test_id",
+      "value": "product-sort-container",
+      "option": "lohi"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "active option",
+      "nth": 0,
+      "value": "active-option"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory items",
+      "value": "inventory-item"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Add to cart (onesie)",
+      "nth": 0,
+      "value": "add-to-cart-sauce-labs-onesie"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "cart badge",
+      "nth": 0,
+      "value": "shopping-cart-badge"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Add to cart (bike light)",
+      "nth": 0,
+      "value": "add-to-cart-sauce-labs-bike-light"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "cart badge",
+      "nth": 0,
+      "value": "shopping-cart-badge"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Cart, 2 items",
+      "nth": 0,
+      "value": "shopping-cart-link"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "page title",
+      "nth": 0,
+      "value": "title"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Checkout",
+      "nth": 0,
+      "value": "checkout"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "page title",
+      "nth": 0,
+      "value": "title"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_fill",
+    "input": {
+      "kind": "test_id",
+      "name": "First Name",
+      "nth": 0,
+      "text": "Test",
+      "value": "firstName"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "First Name",
+      "nth": 0,
+      "value": "firstName"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "name": "First Name",
+      "value": "firstName"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "role",
+      "name": "First Name",
+      "value": "textbox"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_fill",
+    "input": {
+      "kind": "test_id",
+      "name": "Last Name",
+      "nth": 0,
+      "text": "User",
+      "value": "lastName"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_fill",
+    "input": {
+      "kind": "test_id",
+      "name": "Zip/Postal Code",
+      "nth": 0,
+      "text": "12345",
+      "value": "postalCode"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Continue",
+      "nth": 0,
+      "value": "continue"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "page title",
+      "nth": 0,
+      "value": "title"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "checkout summary",
+      "nth": 0,
+      "value": "checkout-summary-container"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "order total",
+      "nth": 0,
+      "value": "total-label"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Finish",
+      "nth": 0,
+      "value": "finish"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "page title",
+      "nth": 0,
+      "value": "title"
+    }
+  }
+]

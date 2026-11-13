@@ -1,0 +1,59 @@
+I've read the skill. Now let me load the browser tools I need and check whether the saved session exists.
+Tools loaded. Per the skill's preconditions, I'll first start the browser from the saved session (`artifacts/state.json`) and then verify it's valid by opening a protected page.
+Session loaded. Now verifying it's valid by opening a protected page:
+Navigation timed out. Let me check where the browser actually ended up:
+URL is `/inventory.html` (no redirect to login). Let me confirm the login form is not visible by reading the page content:
+Session is valid — URL is `/inventory.html` and the inventory list shows the expected Backpack text, so I can skip login (steps 1–3). 
+
+Precondition check: cart must be empty before step 4. Let me verify the cart badge:
+Cart badge not visible → cart is empty ✓. Proceeding to **Step 4**: select "Price (low to high)" (`lohi`) in the sort container:
+Verifying Step 4 checks — reading the active option and the first inventory item:
+Step 4 verified ✓ (active option = "Price (low to high)", Onesie is first). 
+
+**Step 5**: add the Onesie to cart:
+Verifying Step 5 check — cart badge should show "1":
+Step 5 verified ✓ (badge = 1). 
+
+**Step 6**: add the Bike Light to cart:
+Verifying Step 6 check — cart badge should show "2":
+Step 6 verified ✓ (badge = 2). 
+
+**Step 7**: open the cart:
+Verifying Step 7 checks — URL is `/cart.html` ✓. Now the title:
+Step 7 verified ✓ (title = "Your Cart"). 
+
+**Step 8**: click Checkout:
+URL is `/checkout-step-one.html` ✓. Verifying the title:
+Step 8 verified ✓. 
+
+**Step 9**: fill First Name with `Test`:
+Verifying Step 9 — reading the field back:
+Input elements have no text content. Trying `browser_all_texts`, which may surface the input value:
+Text-based reads can't see `<input>` values. Let me try via role locator as a second attempt:
+The tools only read textContent, which is empty for `<input>` elements — but `fill()` reported success (it errors on failure, as we saw with the badge timeout). Saucedemo enforces required fields at Continue, so step 12's URL check will functionally confirm all fields were filled. Proceeding.
+
+**Step 10**: fill Last Name with `User`:
+**Step 11**: fill Zip/Postal Code with `12345`:
+**Step 12**: click Continue:
+URL is `/checkout-step-two.html` ✓ (which also confirms all three fields were filled — saucedemo blocks Continue on empty required fields). Verifying the title and summary:
+Step 12 verified ✓ (Overview page, Onesie first, both items present). 
+
+**Step 13**: reading the order total live from `[data-test="total-label"]`:
+Order total read live: **`Total: $19.42`** ✓. 
+
+**Step 14**: click Finish:
+Verifying Step 14 checks — URL is `/checkout-complete.html` ✓. Now the title:
+Workflow replay complete — all steps passed:
+
+- **Steps 1–3 (login): skipped** — saved session from `artifacts/state.json` was valid; `/inventory.html` loaded directly with the expected inventory content.
+- **Step 4**: sorted by Price (low to high); Onesie ($7.99) became first item.
+- **Steps 5–6**: added the two cheapest items; cart badge went 1 → 2.
+- **Steps 7–8**: opened cart ("Your Cart") and started checkout.
+- **Steps 9–11**: filled Test / User / 12345.
+- **Step 12**: Continue → Overview page listing Onesie and Bike Light.
+- **Step 13**: read the total live from the overview page's `total-label`.
+- **Step 14**: Finish → "Checkout: Complete!" confirmed at `/checkout-complete.html`.
+
+The order (Onesie $7.99 + Bike Light $9.99 + $1.44 tax) totaled `$19.42` as read live from the page.
+
+ORDER_TOTAL: $19.42
