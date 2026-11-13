@@ -153,6 +153,31 @@ def derive_checks(step):
     return kept
 
 
+def _item_name(slug):
+    """Full display name derived from an add-to-cart testid slug
+    (sauce-labs-onesie -> Sauce Labs Onesie). Never passes through the snapshot's
+    80-char cleaner, so it is untruncated by construction."""
+    return " ".join(w.capitalize() for w in slug.split("-"))
+
+
+def add_item_name_checks(steps):
+    """Fix 4: badge counts and 80-char text blobs can't tell a swapped item apart, so
+    every recorded add-to-cart item must appear by its FULL name on the cart and
+    overview pages. Appended after derive_checks: exempt from the 5-check cap, the
+    snapshot truncation and the _CHROME filter."""
+    slugs = []
+    for s in steps:
+        tid = s["desc"].get("testid") or ""
+        if s["action"] == "click" and tid.startswith("add-to-cart-") and tid not in slugs:
+            slugs.append(tid[len("add-to-cart-"):])
+    for s in steps:
+        if s["action"] == "click" and s["before"]["url"] != s["after"]["url"] and (
+                s["after"]["url"].endswith("/cart.html")
+                or s["after"]["url"].endswith("/checkout-step-two.html")):
+            s["checks"] += [{"type": "item_name", "value": _item_name(slug)} for slug in slugs]
+    return steps
+
+
 # --------------------------------------------------------------------------
 # Python side
 # --------------------------------------------------------------------------
@@ -202,7 +227,7 @@ class Observer:
             s["locators"] = pick_locators(e["desc"])
             s["checks"] = derive_checks(s)
             steps.append(s)
-        return steps
+        return add_item_name_checks(steps)
 
 
 # --------------------------------------------------------------------------
@@ -219,6 +244,9 @@ def _check_line(c):
         return f'`[data-test="{c["testid"]}"]` shows "{c["value"]}"'
     if c["type"] == "value":
         return f'field holds `{c["value"]}`'
+    if c["type"] == "item_name":
+        return (f'the page shows the full item name "{c["value"]}" — search all element '
+                'text; a truncated prefix does not satisfy this')
     return "value is non-empty"
 
 

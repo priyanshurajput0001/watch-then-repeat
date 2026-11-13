@@ -68,6 +68,8 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_text("2", exact=True)`
    - Check: URL path is `/cart.html`
    - Check: `[data-test="title"]` shows "Your Cart"
+   - Check: the page shows the full item name "Sauce Labs Onesie" — search all element text; a truncated prefix does not satisfy this
+   - Check: the page shows the full item name "Sauce Labs Bike Light" — search all element text; a truncated prefix does not satisfy this
 
 8. Click **Checkout** _(intent: Open the cart and start checkout)_
    - Locator: `page.get_by_test_id("checkout")`
@@ -109,6 +111,8 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Check: URL path is `/checkout-step-two.html`
    - Check: `[data-test="title"]` shows "Checkout: Overview"
    - Check: `[data-test="checkout-summary-container"]` shows "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat"
+   - Check: the page shows the full item name "Sauce Labs Onesie" — search all element text; a truncated prefix does not satisfy this
+   - Check: the page shows the full item name "Sauce Labs Bike Light" — search all element text; a truncated prefix does not satisfy this
 
 13. Read **order total** with `inner_text()` and keep it as the result: `Total: $19.42` _(intent: Read the order total on the overview page)_
    - Locator: `page.get_by_test_id("total-label")`

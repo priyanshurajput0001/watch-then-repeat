@@ -589,6 +589,14 @@
         "type": "text",
         "testid": "title",
         "value": "Your Cart"
+      },
+      {
+        "type": "item_name",
+        "value": "Sauce Labs Onesie"
+      },
+      {
+        "type": "item_name",
+        "value": "Sauce Labs Bike Light"
       }
     ]
   },
@@ -954,6 +962,14 @@
         "type": "text",
         "testid": "checkout-summary-container",
         "value": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat"
+      },
+      {
+        "type": "item_name",
+        "value": "Sauce Labs Onesie"
+      },
+      {
+        "type": "item_name",
+        "value": "Sauce Labs Bike Light"
       }
     ]
   },
