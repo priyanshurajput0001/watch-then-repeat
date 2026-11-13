@@ -1,5 +1,10 @@
 # watch-then-repeat
 
+## Quick start
+
+1. Record once: `.venv/bin/python recorder.py`, which writes skills/saucedemo_checkout.md.
+2. Replay with the agent: `.venv/bin/python replayer.py`, which reads only the skill file and prints the order total (ORDER_TOTAL: $X.XX).
+
 Watch a browser workflow once, turn what was actually observed into a skill file, and let an
 Agent SDK agent repeat it using nothing but that file. Demo workflow: a saucedemo.com
 checkout — login, sort by price (low to high), add the two cheapest items, check out, read
