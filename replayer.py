@@ -18,6 +18,14 @@ SYSTEM = (
 )
 
 
+def parse_result(text: str) -> dict:
+    """Read the skill's output contract out of the final reply: `ORDER_TOTAL: $X.XX`
+    (or a bare `Total: $X.XX`) on success, `FAILED_STEP: <n>` / `FAILED: step <n>` on failure."""
+    m = re.findall(r"(?:ORDER_TOTAL|(?<![A-Za-z])Total)\s*:\s*\$(\d+\.\d\d)", text, flags=re.I)
+    f = re.findall(r"(?:FAILED_STEP|FAILED)\s*:\s*(?:step\s*)?(\d+)", text, flags=re.I)
+    return {"total": float(m[-1]) if m else None, "failed": int(f[-1]) if (f and not m) else None}
+
+
 async def replay(skill_path: str = DEFAULT_SKILL) -> dict:
     options = ClaudeAgentOptions(
         system_prompt=SYSTEM,
@@ -39,9 +47,7 @@ async def replay(skill_path: str = DEFAULT_SKILL) -> dict:
     finally:
         await close_browser()
 
-    m = re.findall(r"ORDER_TOTAL:\s*(\$\d+\.\d\d)", text)
-    f = re.findall(r"FAILED:\s*step\s*(\d+)[^\n]*", text, flags=re.I)
-    return {"total": m[-1] if m else None, "failed": f[-1] if (f and not m) else None, "transcript": text}
+    return {**parse_result(text), "transcript": text}
 
 
 if __name__ == "__main__":

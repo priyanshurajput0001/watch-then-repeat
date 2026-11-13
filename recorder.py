@@ -247,6 +247,16 @@ def render_skill(steps, start_url, state_path, title="Workflow", result_name="or
           "3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, "
           "the expected check and what the page actually shows.",
           "4. Never navigate outside the allowed domain."]
+    read_n = next((s["n"] for s in steps if s["action"] == "read"), None)
+    amount = (f"the **{result_name}** read live from the page during step {read_n}'s Read "
+              "(its `inner_text()`)" if read_n else f"the **{result_name}** read live from the page")
+    L += ["## Output",
+          "End your final reply with exactly one sentinel line, on a line of its own:",
+          f"- Success: `ORDER_TOTAL: $X.XX`, where the amount is {amount} — never a value quoted "
+          "from this skill. Keep the dollar sign and exactly two decimals.",
+          "- Failure: `FAILED_STEP: <n>`, where `<n>` is the number of the step that still fails "
+          "after the retry rule above.",
+          "Never emit both lines, and never restate a sentinel line elsewhere in the reply."]
     return "\n".join(L) + "\n"
 
 

@@ -142,3 +142,8 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
 2. If the URL is the login page, the session expired: do a fresh login, re-save the session, restart from the first non-login step.
 3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, the expected check and what the page actually shows.
 4. Never navigate outside the allowed domain.
+## Output
+End your final reply with exactly one sentinel line, on a line of its own:
+- Success: `ORDER_TOTAL: $X.XX`, where the amount is the **order total** read live from the page during step 13's Read (its `inner_text()`) — never a value quoted from this skill. Keep the dollar sign and exactly two decimals.
+- Failure: `FAILED_STEP: <n>`, where `<n>` is the number of the step that still fails after the retry rule above.
+Never emit both lines, and never restate a sentinel line elsewhere in the reply.
