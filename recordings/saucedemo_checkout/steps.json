@@ -20,7 +20,8 @@
         "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-password": "Password for all users: secret_sauce"
-      }
+      },
+      "prices": []
     },
     "intent": "Log in with the demo user shown on the login page",
     "n": 1,
@@ -31,7 +32,8 @@
         "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-password": "Password for all users: secret_sauce"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"username\")",
@@ -68,7 +70,8 @@
         "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-password": "Password for all users: secret_sauce"
-      }
+      },
+      "prices": []
     },
     "intent": "Log in with the demo user shown on the login page",
     "n": 2,
@@ -79,7 +82,8 @@
         "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-password": "Password for all users: secret_sauce"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"password\")",
@@ -116,7 +120,8 @@
         "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
         "login-password": "Password for all users: secret_sauce"
-      }
+      },
+      "prices": []
     },
     "intent": "Log in with the demo user shown on the login page",
     "n": 3,
@@ -152,7 +157,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$29.99",
+        "$9.99",
+        "$15.99",
+        "$49.99",
+        "$7.99",
+        "$15.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"login-button\")",
@@ -217,7 +230,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$29.99",
+        "$9.99",
+        "$15.99",
+        "$49.99",
+        "$7.99",
+        "$15.99"
+      ]
     },
     "intent": "Sort products by price, low to high",
     "n": 4,
@@ -253,7 +274,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"product-sort-container\")",
@@ -267,19 +296,11 @@
         "value": "Price (low to high)"
       },
       {
-        "type": "text",
-        "testid": "inventory-container",
-        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
-      },
-      {
-        "type": "text",
-        "testid": "inventory-list",
-        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
-      },
-      {
-        "type": "text",
-        "testid": "inventory-item",
-        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+        "type": "price_order",
+        "value": [
+          "$7.99",
+          "$9.99"
+        ]
       }
     ]
   },
@@ -329,7 +350,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "intent": "Add the two cheapest items (first two after sorting)",
     "n": 5,
@@ -367,7 +396,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"add-to-cart-sauce-labs-onesie\")",
@@ -436,7 +473,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "intent": "Add the two cheapest items (first two after sorting)",
     "n": 6,
@@ -474,7 +519,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"add-to-cart-sauce-labs-bike-light\")",
@@ -543,7 +596,15 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99",
+        "$15.99",
+        "$15.99",
+        "$29.99",
+        "$49.99"
+      ]
     },
     "intent": "Open the cart and start checkout",
     "n": 7,
@@ -572,7 +633,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"shopping-cart-link\")",
@@ -639,7 +704,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "intent": "Open the cart and start checkout",
     "n": 8,
@@ -658,7 +727,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"checkout\")",
@@ -712,7 +782,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "intent": "Enter made-up checkout details",
     "n": 9,
@@ -731,7 +802,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"firstName\")",
@@ -776,7 +848,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "intent": "Enter made-up checkout details",
     "n": 10,
@@ -795,7 +868,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"lastName\")",
@@ -840,7 +914,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "intent": "Enter made-up checkout details",
     "n": 11,
@@ -859,7 +934,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"postalCode\")",
@@ -904,7 +980,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "intent": "Enter made-up checkout details",
     "n": 12,
@@ -941,7 +1018,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"continue\")",
@@ -1020,7 +1101,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "intent": "Read the order total on the overview page",
     "n": 13,
@@ -1057,7 +1142,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "locators": [
       "get_by_test_id(\"total-label\")",
@@ -1116,7 +1205,11 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": [
+        "$7.99",
+        "$9.99"
+      ]
     },
     "intent": "Finish the order and confirm the thank-you page",
     "n": 14,
@@ -1135,7 +1228,8 @@
         "social-facebook": "Facebook",
         "social-linkedin": "LinkedIn",
         "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
-      }
+      },
+      "prices": []
     },
     "locators": [
       "get_by_test_id(\"finish\")",

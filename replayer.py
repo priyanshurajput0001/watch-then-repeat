@@ -14,7 +14,9 @@ DEFAULT_SKILL = "skills/saucedemo_checkout.md"
 SYSTEM = (
     "You are a careful browser automation agent. Read the skill file you are given and follow it "
     "exactly, step by step, verifying each step's Check before continuing. Use only the browser tools. "
-    "If a check still fails after the skill's retry rule, stop and report the failed step. Never guess."
+    "Never guess. A failed Check means the page is in an incorrect state — not something to work "
+    "around. After one retry, STOP IMMEDIATELY: do not click anything else, do not continue to later "
+    "steps, and end your reply with FAILED_STEP: <n> and no ORDER_TOTAL line."
 )
 
 

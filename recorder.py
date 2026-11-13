@@ -60,7 +60,10 @@ INIT_JS = r"""
       const k = el.getAttribute('data-test'), t = clean(el.innerText);
       if (t && !(k in texts)) texts[k] = t;
     });
-    return {url: location.pathname, texts};
+    const prices = [...document.querySelectorAll('[data-test]')]
+      .filter(el => el.getClientRects().length && /price/i.test(el.getAttribute('data-test')))
+      .map(el => clean(el.innerText)).filter(Boolean);
+    return {url: location.pathname, texts, prices};
   };
 
   const send = (action, el, value, shown) => {
@@ -142,6 +145,14 @@ def derive_checks(step):
     for k, v in after["texts"].items():
         if before["texts"].get(k) != v:
             checks.append({"type": "text", "testid": k, "value": v})
+    if step["action"] == "select":
+        # Sort check, strict and short: the selected option's label is the active one,
+        # and the recorded display order is price-ascending (first two prices).
+        checks = [c for c in checks if c["type"] == "url"
+                  or (c["type"] == "text" and c["value"] == step.get("shown"))]
+        prices = after.get("prices") or []
+        if len(prices) >= 2 and prices != (before.get("prices") or []):
+            checks.append({"type": "price_order", "value": prices[:2]})
     checks = checks[:5]
     kept = [c for c in checks if not (c["type"] == "text" and _is_chrome(c["testid"]))]
     if any(c["type"] == "url" for c in kept) and not any(c["type"] == "text" for c in kept):
@@ -244,6 +255,9 @@ def _check_line(c):
         return f'`[data-test="{c["testid"]}"]` shows "{c["value"]}"'
     if c["type"] == "value":
         return f'field holds `{c["value"]}`'
+    if c["type"] == "price_order":
+        return (f"the first item's price is lower than the second's — read every element with "
+                f"'price' in its testid, in order: first `{c['value'][0]}`, second `{c['value'][1]}`")
     if c["type"] == "item_name":
         return (f'the page shows the full item name "{c["value"]}" — search all element '
                 'text; a truncated prefix does not satisfy this')
@@ -288,11 +302,12 @@ def render_skill(steps, start_url, state_path, title="Workflow", result_name="or
             L.append(f"   - Check: {_check_line(c)}")
         L.append("")
     L += ["## When a check fails",
-          "1. Re-run the step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).",
-          "2. If the URL is the login page, the session expired: do a fresh login, "
+          "1. If a Check fails, re-run that step's locator fallbacks once, then wait for the check "
+          "condition (auto-wait, max ~10s).",
+          "2. Exception: if the URL is the login page, the session expired — do a fresh login, "
           "restart from the first non-login step.",
-          "3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, "
-          "the expected check and what the page actually shows.",
+          "3. If a Check fails after one retry, STOP IMMEDIATELY. Do not click anything else. Do not "
+          "continue to later steps. End your reply with `FAILED_STEP: <n>` and no ORDER_TOTAL line.",
           "4. Never navigate outside the allowed domain."]
     read_n = next((s["n"] for s in steps if s["action"] == "read"), None)
     amount = (f"the **{result_name}** read live from the page during step {read_n}'s Read "

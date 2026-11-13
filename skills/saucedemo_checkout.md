@@ -41,9 +41,7 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_role("combobox", name="Sort products", exact=True)`
    - Fallback: `page.get_by_label("Sort products", exact=True)`
    - Check: `[data-test="active-option"]` shows "Price (low to high)"
-   - Check: `[data-test="inventory-container"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
-   - Check: `[data-test="inventory-list"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
-   - Check: `[data-test="inventory-item"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+   - Check: the first item's price is lower than the second's — read every element with 'price' in its testid, in order: first `$7.99`, second `$9.99`
 
 5. Click **Add to cart** _(intent: Add the two cheapest items (first two after sorting))_
    - Locator: `page.get_by_test_id("add-to-cart-sauce-labs-onesie")`
@@ -128,9 +126,9 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Check: `[data-test="title"]` shows "Checkout: Complete!"
 
 ## When a check fails
-1. Re-run the step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).
-2. If the URL is the login page, the session expired: do a fresh login, restart from the first non-login step.
-3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, the expected check and what the page actually shows.
+1. If a Check fails, re-run that step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).
+2. Exception: if the URL is the login page, the session expired — do a fresh login, restart from the first non-login step.
+3. If a Check fails after one retry, STOP IMMEDIATELY. Do not click anything else. Do not continue to later steps. End your reply with `FAILED_STEP: <n>` and no ORDER_TOTAL line.
 4. Never navigate outside the allowed domain.
 ## Output
 End your final reply with exactly one sentinel line, on a line of its own:
