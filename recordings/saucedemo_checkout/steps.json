@@ -166,23 +166,8 @@
       },
       {
         "type": "text",
-        "testid": "header-container",
-        "value": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
-      },
-      {
-        "type": "text",
-        "testid": "primary-header",
-        "value": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
-      },
-      {
-        "type": "text",
-        "testid": "inventory-sidebar-link",
-        "value": "All Items"
-      },
-      {
-        "type": "text",
-        "testid": "dynamic-catalog-sidebar-link",
-        "value": "Dynamic Catalog"
+        "testid": "inventory-list",
+        "value": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th"
       }
     ]
   },
@@ -276,11 +261,6 @@
       "get_by_label(\"Sort products\", exact=True)"
     ],
     "checks": [
-      {
-        "type": "text",
-        "testid": "secondary-header",
-        "value": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri"
-      },
       {
         "type": "text",
         "testid": "active-option",
@@ -607,21 +587,6 @@
       },
       {
         "type": "text",
-        "testid": "header-container",
-        "value": "Open Menu Swag Labs 2 Your Cart"
-      },
-      {
-        "type": "text",
-        "testid": "primary-header",
-        "value": "Open Menu Swag Labs 2"
-      },
-      {
-        "type": "text",
-        "testid": "secondary-header",
-        "value": "Your Cart"
-      },
-      {
-        "type": "text",
         "testid": "title",
         "value": "Your Cart"
       }
@@ -697,16 +662,6 @@
       {
         "type": "url",
         "value": "/checkout-step-one.html"
-      },
-      {
-        "type": "text",
-        "testid": "header-container",
-        "value": "Open Menu Swag Labs 2 Checkout: Your Information"
-      },
-      {
-        "type": "text",
-        "testid": "secondary-header",
-        "value": "Checkout: Your Information"
       },
       {
         "type": "text",
@@ -992,16 +947,6 @@
       },
       {
         "type": "text",
-        "testid": "header-container",
-        "value": "Open Menu Swag Labs 2 Checkout: Overview"
-      },
-      {
-        "type": "text",
-        "testid": "secondary-header",
-        "value": "Checkout: Overview"
-      },
-      {
-        "type": "text",
         "testid": "title",
         "value": "Checkout: Overview"
       },
@@ -1186,21 +1131,6 @@
       {
         "type": "url",
         "value": "/checkout-complete.html"
-      },
-      {
-        "type": "text",
-        "testid": "header-container",
-        "value": "Open Menu Swag Labs Checkout: Complete!"
-      },
-      {
-        "type": "text",
-        "testid": "primary-header",
-        "value": "Open Menu Swag Labs"
-      },
-      {
-        "type": "text",
-        "testid": "secondary-header",
-        "value": "Checkout: Complete!"
       },
       {
         "type": "text",

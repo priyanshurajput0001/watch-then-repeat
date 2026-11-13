@@ -118,8 +118,19 @@ def pick_locators(d):
     return out
 
 
+# Site chrome (header bars, menus, sidebars) flips between runs — burger-menu open/close
+# text, sidebar entries — so a chrome check can never pass reliably. Checks pin page content.
+_CHROME = ("header", "menu", "sidebar")
+
+
+def _is_chrome(testid):
+    return any(w in testid for w in _CHROME)
+
+
 def derive_checks(step):
-    """Checks come from diffing observed before/after state, not hand-written."""
+    """Checks come from diffing observed before/after state, not hand-written.
+    Chrome (header/menu/sidebar) is never checked; a navigation step whose text
+    checks are all chrome anchors on the page's content list instead."""
     before, after = step["before"], step["after"]
     checks = []
     if step["action"] == "fill":
@@ -131,7 +142,15 @@ def derive_checks(step):
     for k, v in after["texts"].items():
         if before["texts"].get(k) != v:
             checks.append({"type": "text", "testid": k, "value": v})
-    return checks[:5]
+    checks = checks[:5]
+    kept = [c for c in checks if not (c["type"] == "text" and _is_chrome(c["testid"]))]
+    if any(c["type"] == "url" for c in kept) and not any(c["type"] == "text" for c in kept):
+        anchor = next((k for k, v in after["texts"].items()
+                       if before["texts"].get(k) != v and not _is_chrome(k)
+                       and k.endswith("-list")), None)
+        if anchor:
+            kept.append({"type": "text", "testid": anchor, "value": after["texts"][anchor]})
+    return kept
 
 
 # --------------------------------------------------------------------------

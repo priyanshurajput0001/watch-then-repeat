@@ -34,16 +34,12 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_role("button", name="Login", exact=True)`
    - Fallback: `page.locator("#login-button")`
    - Check: URL path is `/inventory.html`
-   - Check: `[data-test="header-container"]` shows "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
-   - Check: `[data-test="primary-header"]` shows "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
-   - Check: `[data-test="inventory-sidebar-link"]` shows "All Items"
-   - Check: `[data-test="dynamic-catalog-sidebar-link"]` shows "Dynamic Catalog"
+   - Check: `[data-test="inventory-list"]` shows "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th"
 
 4. Select "Price (low to high)" (value `lohi`) in **Sort products** _(intent: Sort products by price, low to high)_
    - Locator: `page.get_by_test_id("product-sort-container")`
    - Fallback: `page.get_by_role("combobox", name="Sort products", exact=True)`
    - Fallback: `page.get_by_label("Sort products", exact=True)`
-   - Check: `[data-test="secondary-header"]` shows "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri"
    - Check: `[data-test="active-option"]` shows "Price (low to high)"
    - Check: `[data-test="inventory-container"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
    - Check: `[data-test="inventory-list"]` shows "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
@@ -71,9 +67,6 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_label("Cart, 2 items", exact=True)`
    - Fallback: `page.get_by_text("2", exact=True)`
    - Check: URL path is `/cart.html`
-   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Your Cart"
-   - Check: `[data-test="primary-header"]` shows "Open Menu Swag Labs 2"
-   - Check: `[data-test="secondary-header"]` shows "Your Cart"
    - Check: `[data-test="title"]` shows "Your Cart"
 
 8. Click **Checkout** _(intent: Open the cart and start checkout)_
@@ -82,8 +75,6 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_text("Checkout", exact=True)`
    - Fallback: `page.locator("#checkout")`
    - Check: URL path is `/checkout-step-one.html`
-   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Checkout: Your Information"
-   - Check: `[data-test="secondary-header"]` shows "Checkout: Your Information"
    - Check: `[data-test="title"]` shows "Checkout: Your Information"
    - Check: `[data-test="checkout-info-container"]` shows "Cancel"
 
@@ -116,8 +107,6 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_role("button", name="Continue", exact=True)`
    - Fallback: `page.locator("#continue")`
    - Check: URL path is `/checkout-step-two.html`
-   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs 2 Checkout: Overview"
-   - Check: `[data-test="secondary-header"]` shows "Checkout: Overview"
    - Check: `[data-test="title"]` shows "Checkout: Overview"
    - Check: `[data-test="checkout-summary-container"]` shows "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat"
 
@@ -132,9 +121,6 @@ Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order
    - Fallback: `page.get_by_text("Finish", exact=True)`
    - Fallback: `page.locator("#finish")`
    - Check: URL path is `/checkout-complete.html`
-   - Check: `[data-test="header-container"]` shows "Open Menu Swag Labs Checkout: Complete!"
-   - Check: `[data-test="primary-header"]` shows "Open Menu Swag Labs"
-   - Check: `[data-test="secondary-header"]` shows "Checkout: Complete!"
    - Check: `[data-test="title"]` shows "Checkout: Complete!"
 
 ## When a check fails
