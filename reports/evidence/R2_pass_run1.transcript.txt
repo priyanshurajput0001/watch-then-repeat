@@ -1,0 +1,67 @@
+I've read the skill. It's a browser-replay workflow on saucedemo.com with a saved session at `artifacts/state.json`. I'll start by loading the session and verifying it's still valid before skipping login.
+Session loaded. Now let me verify it's valid by opening a protected page — if it redirects to login or shows the login form, I'll do a fresh login.
+No redirect — still on `/inventory.html`. Let me confirm the page is actually the logged-in inventory page (no login form visible) by reading the primary header.
+The session is valid — no redirect, and the primary header shows "Open Menu / Swag Labs" (a logged-in inventory page, no login form). So per the skill, I skip steps 1–3 and resume at step 4.
+
+**Step 4 — Sort products by price (low to high), value `lohi`:**
+Now the step 4 checks:
+Secondary header and active option both confirm "Price (low to high)". Now verify the first inventory item is the cheapest (Sauce Labs Onesie):
+Sorted correctly — the two cheapest are first: Onesie $7.99, Bike Light $9.99.
+
+**Step 5 — Add the Onesie to cart:**
+Badge shows 1 ✓.
+
+**Step 6 — Add the Bike Light to cart:**
+Badge shows 2 ✓.
+
+**Step 7 — Open the cart:**
+On `/cart.html`, title "Your Cart" ✓.
+
+**Step 8 — Click Checkout:**
+**Steps 9–11 — Fill checkout form:**
+Fields filled. Let me verify each holds its value per the skill checks:
+`read_text` returns nothing for input elements (they have no inner text), but each fill auto-waited and reported success on the located element. Moving on.
+
+**Step 12 — Click Continue:**
+The click reported `/checkout-step-two.html` but the URL now shows the site root and the overview elements aren't found. Let me re-check the state:
+We're back at `https://www.saucedemo.com/` (the login page) — the session was lost mid-flow. The skill's failure rule #2 applies: do a fresh login, re-save the session, and restart from the first non-login step. Let me confirm the login form is visible:
+Login page confirmed. Executing fresh login — **Step 1 — Username:**
+**Step 2 — Password:**
+**Step 3 — Click Login:**
+Logged in successfully — `/inventory.html` with header visible ✓. However, note the header shows the cart badge with **2** — the previous run's cart items persisted through the session loss. The skill's precondition requires the cart to be **empty before step 4**, so I need to clear it. Let me first check if there's a session-save tool, then empty the cart:
+No session-save tool exists in this browser toolset (only `load_session`), so I'll note that and keep the live context going. Now, clearing the leftover cart items to satisfy the "cart must be empty before step 4" precondition — opening the cart:
+Cart still holds the 2 items from the interrupted run. Removing both:
+Cart is now empty (no cart items found). Verifying the badge is gone:
+Header shows no cart badge — cart is empty ✓. Restarting from the first non-login step. Navigating back to the inventory (same domain):
+
+**Step 4 — Sort by price (low to high):**
+Sort applied ✓ — first item is the Onesie ($7.99), second the Bike Light ($9.99).
+
+**Step 5 — Add the Onesie:**
+Badge shows 1 ✓.
+
+**Step 6 — Add the Bike Light:**
+Badge shows 2 ✓.
+
+**Step 7 — Open the cart:**
+**Step 8 — Click Checkout:**
+**Steps 9–11 — Fill checkout details:**
+**Step 12 — Click Continue:**
+On the overview page ✓. Verifying the summary shows the expected items:
+Summary confirms both items ✓.
+
+**Step 13 — Read the order total** (`total-label`):
+Order total read: **$19.42** (non-empty, and it matches the skill's recorded value) ✓.
+
+**Step 14 — Click Finish:**
+The workflow completed successfully — `/checkout-complete.html` with title "Checkout: Complete!" ✓
+
+## Order total: **$19.42** (`Total: $19.42` from the overview page)
+
+**How the run went:**
+1. **Session check** — `artifacts/state.json` loaded fine; opening `/inventory.html` stayed put with no login form, so steps 1–3 were skipped as allowed.
+2. **Interruption** — After the first Continue click, the browser context was lost (URL dropped to the login page). Per the skill's failure rule #2, I did a fresh login (`standard_user`).
+3. **Precondition repair** — The fresh session inherited the 2 leftover items from the interrupted run, so I emptied the cart (removed both) to satisfy "cart must be empty before step 4." Note: there's no session-save tool in this toolset, so `state.json` could not be re-saved — only the live context was used.
+4. **Replay from step 4** — Sorted by price (low → high), added the two cheapest items (Sauce Labs Onesie $7.99 + Sauce Labs Bike Light $9.99), checked out with Test / User / 12345, and finished.
+
+Verification: Item total $17.98 + Tax $1.44 = **$19.42**, matching the skill's recorded value on the `total-label` element, and all URL/title checks passed through `/checkout-complete.html`.

@@ -1,0 +1,84 @@
+{
+  "label": "a_step5",
+  "steps": [
+    {
+      "n": 1,
+      "do": "Fill **Username** with `standard_user` _(intent: Log in with",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 2,
+      "do": "Fill **Password** with `secret_sauce` _(intent: Log in with ",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 3,
+      "do": "Click **Login** _(intent: Log in with the demo user shown on",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"login-button\")"
+    },
+    {
+      "n": 4,
+      "do": "Select \"Price (low to high)\" (value `lohi`) in **Sort produc",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 5,
+      "do": "Click **Add to cart** _(intent: Add the two cheapest items (",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"add-to-cart-sauce-labs-bolt-t-shirt\")"
+    },
+    {
+      "n": 6,
+      "do": "Click **Add to cart** _(intent: Add the two cheapest items (",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"add-to-cart-sauce-labs-bike-light\")"
+    },
+    {
+      "n": 7,
+      "do": "Click **Cart, 2 items** _(intent: Open the cart and start ch",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"shopping-cart-link\")"
+    },
+    {
+      "n": 8,
+      "do": "Click **Checkout** _(intent: Open the cart and start checkou",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"checkout\")"
+    },
+    {
+      "n": 9,
+      "do": "Fill **First Name** with `Test` _(intent: Enter made-up chec",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 10,
+      "do": "Fill **Last Name** with `User` _(intent: Enter made-up check",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 11,
+      "do": "Fill **Zip/Postal Code** with `12345` _(intent: Enter made-u",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 12,
+      "do": "Click **Continue** _(intent: Enter made-up checkout details)",
+      "status": "CHECK-FAIL",
+      "detail": "`[data-test=\"checkout-summary-container\"]` shows \"QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat\" -> got 'QTYDescription 1 Sauce Labs Bolt T-Shirt Get your testing superhero on with the ' want prefix 'QTYDescription 1 Sau"
+    }
+  ],
+  "first_fail": {
+    "step": 12,
+    "where": "check",
+    "check": "`[data-test=\"checkout-summary-container\"]` shows \"QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat\"",
+    "detail": "got 'QTYDescription 1 Sauce Labs Bolt T-Shirt Get your testing superhero on with the ' want prefix 'QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat'"
+  },
+  "returned_total": null
+}

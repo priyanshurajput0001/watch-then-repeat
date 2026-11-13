@@ -1,0 +1,3 @@
+line 42: 4. Select "Price (low to high)" (value `lohi`) in **Sort products** _(intent: Sort products by price, low to high)_
+line 46: - Check: `[data-test="secondary-header"]` shows "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri"
+line 47: - Check: `[data-test="active-option"]` shows "Price (low to high)"

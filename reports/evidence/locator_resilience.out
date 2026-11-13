@@ -1,0 +1,48 @@
+  scenario baseline: completed
+  scenario strip_class: FAILED at step-page resolution: Error: Page.evaluate: ReferenceError: page is not defined
+    at eval (eval at evaluate (:370:30), <anonymous>:1:1)
+    at eval (<anonymous>)
+    at UtilityScript.evaluate (<anonymous>:370:30)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+  scenario wrap_body: completed
+  scenario reorder_items: FAILED at step-page resolution: RuntimeError: scenario reorder_items: reorder rewrite NOT served (first item still 'Sauce Labs Backpack\ncarry.allTheThings()')
+  scenario all_combined: FAILED at step-page resolution: Error: Page.evaluate: ReferenceError: page is not defined
+    at eval (eval at evaluate (:370:30), <anonymous>:1:74)
+    at eval (<anonymous>)
+    at UtilityScript.evaluate (<anonymous>:370:30)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+per-step resolution counts (Locator then Fallbacks, L/F markers):
+step  baseline     strip_class  wrap_body    reorder_itemsall_combined 
+1     L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1
+2     L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1L:1 F:1 F:1 F:1 F:1
+3     L:1 F:1 F:1  L:1 F:1 F:1  L:1 F:1 F:1  L:1 F:1 F:1  L:1 F:1 F:1  
+4     L:1 F:1 F:1               L:1 F:1 F:1  L:1 F:1 F:1               
+5     L:1 F:6 F:6 F:1             L:1 F:6 F:6 F:1L:1 F:6 F:6 F:1             
+6     L:1 F:5 F:5 F:1             L:1 F:5 F:5 F:1L:1 F:5 F:5 F:1             
+7     L:1 F:1 F:1 F:1             L:1 F:1 F:1 F:1                          
+8     L:0 F:0 F:0 F:1             L:0 F:0 F:0 F:0                          
+9     L:0 F:0 F:0 F:0 F:0             L:0 F:0 F:0 F:0 F:0                          
+10    L:0 F:0 F:0 F:0 F:0             L:0 F:0 F:0 F:0 F:0                          
+11    L:0 F:0 F:0 F:0 F:0             L:0 F:0 F:0 F:0 F:0                          
+12    L:0 F:0 F:1               L:1 F:1 F:1                            
+13    L:0 F:0                   L:0 F:0                                
+14    L:0 F:0 F:0 F:0             L:0 F:0 F:0 F:0                          
+(L = primary Locator, F = Fallback; count 1 = unique, 0 = broken, >1 = strict-mode hazard)
+evidence: /Users/priyanshurajput/watch-then-repeat/reports/evidence/locator_resilience.json
+  PROBLEM baseline step 8: primary get_by_test_id('checkout') -> 0
+  PROBLEM baseline step 9: primary get_by_test_id('firstName') -> 0
+  PROBLEM baseline step 10: primary get_by_test_id('lastName') -> 0
+  PROBLEM baseline step 11: primary get_by_test_id('postalCode') -> 0
+  PROBLEM baseline step 12: primary get_by_test_id('continue') -> 0
+  PROBLEM baseline step 13: primary get_by_test_id('total-label') -> 0
+  PROBLEM baseline step 14: primary get_by_test_id('finish') -> 0
+  PROBLEM wrap_body step 8: primary get_by_test_id('checkout') -> 0
+  PROBLEM wrap_body step 9: primary get_by_test_id('firstName') -> 0
+  PROBLEM wrap_body step 10: primary get_by_test_id('lastName') -> 0
+  PROBLEM wrap_body step 11: primary get_by_test_id('postalCode') -> 0
+  PROBLEM wrap_body step 13: primary get_by_test_id('total-label') -> 0
+  PROBLEM wrap_body step 14: primary get_by_test_id('finish') -> 0
+
+baseline fallbacks: 4 resolve to >1 (strict-mode hazard), 26 resolve to 0
+VERDICT: PRIMARY locators BROKEN somewhere

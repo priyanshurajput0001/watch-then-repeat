@@ -1,0 +1,36 @@
+{
+  "label": "b",
+  "steps": [
+    {
+      "n": 1,
+      "do": "Fill **Username** with `standard_user` _(intent: Log in with",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 2,
+      "do": "Fill **Password** with `secret_sauce` _(intent: Log in with ",
+      "status": "action-ok",
+      "detail": ""
+    },
+    {
+      "n": 3,
+      "do": "Click **Login** _(intent: Log in with the demo user shown on",
+      "status": "action-ok",
+      "detail": "used get_by_test_id(\"login-button\")"
+    },
+    {
+      "n": 4,
+      "do": "Select \"Price (high to low)\" (value `hilo`) in **Sort produc",
+      "status": "CHECK-FAIL",
+      "detail": "`[data-test=\"secondary-header\"]` shows \"Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri\" -> got 'Products Price (high to low) Name (A to Z) Name (Z to A) Price (low to high) Pri' want prefix 'Products Price (low "
+    }
+  ],
+  "first_fail": {
+    "step": 4,
+    "where": "check",
+    "check": "`[data-test=\"secondary-header\"]` shows \"Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri\"",
+    "detail": "got 'Products Price (high to low) Name (A to Z) Name (Z to A) Price (low to high) Pri' want prefix 'Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri'"
+  },
+  "returned_total": null
+}

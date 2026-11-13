@@ -1,0 +1,20 @@
+{"t": 1794579593.590106, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_check_tampered.md"}, "blocked": false}
+{"t": 1794579654.2156029, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_all_texts,mcp__browser__browser_click,mcp__browser__browser_fill,mcp__browser__browser_goto,mcp__browser__browser_load_session,mcp__browser__browser_read_text,mcp__browser__browser_select,mcp__browser__browser_url", "max_results": 8}, "blocked": false}
+{"t": 1794579663.62055, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794579668.0928168, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/"}, "blocked": false}
+{"t": 1794579672.6389692, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794579672.891, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "css", "value": "body", "name": "body"}, "blocked": false}
+{"t": 1794579683.2962859, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794579689.43101, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794579712.9805892, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794579719.615597, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "secondary-header", "name": "secondary-header", "nth": 0}, "blocked": false}
+{"t": 1794579719.940407, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "active-option", "name": "active-option", "nth": 0}, "blocked": false}
+{"t": 1794579725.8500962, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "inventory-container", "nth": 0, "value": "inventory-container"}, "blocked": false}
+{"t": 1794579726.191177, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "inventory-list", "nth": 0, "value": "inventory-list"}, "blocked": false}
+{"t": 1794579731.5024261, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "inventory-item", "nth": 0, "value": "inventory-item"}, "blocked": false}
+{"t": 1794579738.1817129, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "shopping-cart-badge", "nth": 0, "value": "shopping-cart-badge"}, "blocked": false}
+{"t": 1794579753.723464, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "add-to-cart-sauce-labs-onesie", "nth": 0, "value": "add-to-cart-sauce-labs-onesie"}, "blocked": false}
+{"t": 1794579758.306122, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "shopping-cart-link", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}
+{"t": 1794579758.7234051, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "shopping-cart-badge", "nth": 0, "value": "shopping-cart-badge"}, "blocked": false}
+{"t": 1794579791.725002, "tool": "mcp__browser__browser_read_text", "input": {"kind": "role", "name": "Add to cart", "nth": 0, "value": "button"}, "blocked": false}
+{"t": 1794579792.074782, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "shopping-cart-link", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}

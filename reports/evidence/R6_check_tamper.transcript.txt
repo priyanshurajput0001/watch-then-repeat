@@ -1,0 +1,31 @@
+I've read the fixture. It's a recorded Saucedemo checkout replay with strict per-step checks and a stop-on-failure rule. Let me load the browser tools and begin.
+Tools loaded. Per the preconditions, I'll first try the saved session (`artifacts/state.json`), then open the site and check whether the login form is visible.
+Session loaded and root URL open. To test whether the session is valid, I'll open a protected page (`/inventory.html`) — if it redirects to the login page, I need a fresh login.
+We stayed on `/inventory.html` — no redirect, so the saved session looks valid (I'll confirm the login form is absent as I verify step 3's checks later). Since the fixture skips steps 1–3 with a valid session, I proceed to **step 4**: select "Price (low to high)" in the sort control. First the primary locator:
+Sort applied. Now verify step 4's checks — reading `secondary-header`, `active-option`, `inventory-container`, `inventory-list`, `inventory-item`:
+`secondary-header` and `active-option` match. Now the inventory checks:
+Sorted low→high as expected (Onesie $7.99, Bike Light $9.99 first two). Checking the first `inventory-item`:
+Step 4 fully passes. Precondition: cart must be empty before adding items — verifying via the cart badge (expect it absent/empty):
+Cart is empty (badge never appears) ✓. **Step 5**: add the Onesie via its primary locator:
+Now step 5's checks — `shopping-cart-link` and `shopping-cart-badge`:
+**Check failure at step 5.** `shopping-cart-badge` shows "1" ✓, but `shopping-cart-link` was expected to show **"3"** and shows **"1"**. Applying the skill's retry rule — re-run once and wait (auto-wait ~10s) before concluding:
+The retry rule is exhausted: after re-running the fallback locator (the button now reads "Remove"/the action completed successfully) and waiting with auto-wait, `shopping-cart-link` still reads **"1"**. Per the skill's rule 3 ("If a check still fails, stop. Do not improvise or skip ahead") I am stopping here.
+
+---
+
+## Result: stopped at Step 5 — check failure (order total NOT obtained)
+
+**Failed step:** Step 5 — Click **Add to cart** (Sauce Labs Onesie)
+
+| | Expected (recorded check) | Actual (page) |
+|---|---|---|
+| `[data-test="shopping-cart-link"]` | shows **"3"** | shows **"1"** |
+| `[data-test="shopping-cart-badge"]` | shows "1" ✓ | shows "1" |
+
+**Why I stopped:** The step's own recorded checks are internally contradictory. The intent is "Add the two cheapest items (first two after sorting)", this is the *first* add, the badge check says "1", and step 6's check says "2" after the second add — so the link check "3" cannot be a genuine recording. It appears tampered. The link and badge both read "1", which is the true state (1 item in cart). Following the skill's stop rule, I did not skip ahead to checkout.
+
+**About the order total:** I never reached step 13 (checkout overview), so no total was read from the page and I cannot truthfully return one. The fixture's *recorded* value is `Total: $19.42` (Onesie $7.99 + Bike Light $9.99 + 8% tax = $19.42, arithmetic is plausible), but per the skill's "Never guess" rule that recorded value is **unverified** and not a replayed result.
+
+**Steps that did pass:** Session loaded from `artifacts/state.json`; `/inventory.html` opened without redirect (login skipped per preconditions); cart confirmed empty; step 4 (sort low→high, all 5 checks ✓); step 5 action executed (button resolved and toggled, badge "1").
+
+If you want, I can re-run with the tampered check corrected to "1" (or with that check waived) and complete the checkout to read the live order total.

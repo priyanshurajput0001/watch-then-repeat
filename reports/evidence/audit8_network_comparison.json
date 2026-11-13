@@ -1,0 +1,157 @@
+{
+  "listener_requests_total": 16,
+  "product_route_logged": 1,
+  "expected_checkout_phase": 1,
+  "missed_by_product_route": [],
+  "logged_but_not_checkout_phase": [],
+  "product_slice": [
+    {
+      "t": 1794578605.053828,
+      "page": "https://www.saucedemo.com/checkout-complete.html",
+      "method": "GET",
+      "type": "image",
+      "url": "https://www.saucedemo.com/assets/checkmark-VLWQafip.png"
+    }
+  ],
+  "expected_detail": [
+    {
+      "t": 1794578605.053309,
+      "req_url": "https://www.saucedemo.com/assets/checkmark-VLWQafip.png",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/checkout-complete.html",
+      "committed_page": "https://www.saucedemo.com/checkout-complete.html"
+    }
+  ],
+  "all_listener_requests": [
+    {
+      "t": 1794578603.0974169,
+      "req_url": "https://www.saucedemo.com/",
+      "method": "GET",
+      "type": "document",
+      "page_url_at_event": "about:blank",
+      "committed_page": ""
+    },
+    {
+      "t": 1794578603.919424,
+      "req_url": "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500",
+      "method": "GET",
+      "type": "stylesheet",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578603.92062,
+      "req_url": "https://www.saucedemo.com/assets/index-DnLqFcJI.js",
+      "method": "GET",
+      "type": "script",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578603.921961,
+      "req_url": "https://www.saucedemo.com/assets/index-aSZoiKGF.css",
+      "method": "GET",
+      "type": "stylesheet",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.5927129,
+      "req_url": "https://events.backtrace.io/api/unique-events/submit?universe=UNIVERSE&token=TOKEN",
+      "method": "POST",
+      "type": "fetch",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.5939891,
+      "req_url": "https://events.backtrace.io/api/summed-events/submit?universe=UNIVERSE&token=TOKEN",
+      "method": "POST",
+      "type": "fetch",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.618342,
+      "req_url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2",
+      "method": "GET",
+      "type": "font",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.619468,
+      "req_url": "https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2",
+      "method": "GET",
+      "type": "font",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.620382,
+      "req_url": "https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2",
+      "method": "GET",
+      "type": "font",
+      "page_url_at_event": "https://www.saucedemo.com/",
+      "committed_page": "https://www.saucedemo.com/"
+    },
+    {
+      "t": 1794578604.752617,
+      "req_url": "https://www.saucedemo.com/assets/sauce-backpack-1200x1500-CjRW-Djj.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578604.753479,
+      "req_url": "https://www.saucedemo.com/assets/bike-light-1200x1500-DxcZRFOA.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578604.7543428,
+      "req_url": "https://www.saucedemo.com/assets/bolt-shirt-1200x1500-mR0ldpVS.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578604.754944,
+      "req_url": "https://www.saucedemo.com/assets/sauce-pullover-1200x1500-BfbI-PSd.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578604.7556548,
+      "req_url": "https://www.saucedemo.com/assets/red-onesie-1200x1500-BrSuq0ic.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578604.756337,
+      "req_url": "https://www.saucedemo.com/assets/red-tatt-1200x1500-E-qp6aYf.jpg",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/inventory.html",
+      "committed_page": "https://www.saucedemo.com/inventory.html"
+    },
+    {
+      "t": 1794578605.053309,
+      "req_url": "https://www.saucedemo.com/assets/checkmark-VLWQafip.png",
+      "method": "GET",
+      "type": "image",
+      "page_url_at_event": "https://www.saucedemo.com/checkout-complete.html",
+      "committed_page": "https://www.saucedemo.com/checkout-complete.html"
+    }
+  ],
+  "note": "product gate = page URL at ROUTE time (= source page, navigation target not yet committed); a document request TO a checkout page from a non-checkout page is missed"
+}

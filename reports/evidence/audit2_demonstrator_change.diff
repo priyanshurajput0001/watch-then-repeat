@@ -1,0 +1,16 @@
+61c61
+<    - Locator: `page.get_by_test_id("add-to-cart-sauce-labs-bike-light")`
+---
+>    - Locator: `page.get_by_test_id("add-to-cart-sauce-labs-bolt-t-shirt")`
+64c64
+<    - Fallback: `page.locator("#add-to-cart-sauce-labs-bike-light")`
+---
+>    - Fallback: `page.locator("#add-to-cart-sauce-labs-bolt-t-shirt")`
+124c124
+< 13. Read **order total** with `inner_text()` and keep it as the result: `Total: $19.42` _(intent: Read the order total on the overview page)_
+---
+> 13. Read **order total** with `inner_text()` and keep it as the result: `Total: $25.90` _(intent: Read the order total on the overview page)_
+126c126
+<    - Fallback: `page.get_by_text("Total: $19.42", exact=True)`
+---
+>    - Fallback: `page.get_by_text("Total: $25.90", exact=True)`

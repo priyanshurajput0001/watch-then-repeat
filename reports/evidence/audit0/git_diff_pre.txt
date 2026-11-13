@@ -1,0 +1,2 @@
+ recordings/saucedemo_checkout/trace.zip | Bin 404422 -> 510260 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)

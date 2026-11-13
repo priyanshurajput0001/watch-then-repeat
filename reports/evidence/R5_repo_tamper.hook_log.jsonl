@@ -1,0 +1,22 @@
+{"t": 1794578781.920021, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_repo_tampered.md"}, "blocked": false}
+{"t": 1794578906.1381388, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_goto,mcp__browser__browser_click,mcp__browser__browser_fill,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_all_texts,mcp__browser__browser_url,mcp__browser__browser_load_session", "max_results": 8}, "blocked": false}
+{"t": 1794578906.4021, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json"}, "blocked": true}
+{"t": 1794578922.093066, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794578927.462111, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/"}, "blocked": false}
+{"t": 1794578934.224642, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794578934.5157728, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "css", "value": "body", "name": "body"}, "blocked": false}
+{"t": 1794578941.8609128, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "login-button", "name": "login-button", "nth": 0}, "blocked": false}
+{"t": 1794578949.9090261, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794578950.300898, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "css", "name": "body", "value": "body"}, "blocked": false}
+{"t": 1794578972.84686, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "app-logo", "nth": 0, "value": "app-logo"}, "blocked": false}
+{"t": 1794578982.871456, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "login-credentials", "nth": 0, "value": "login-credentials"}, "blocked": false}
+{"t": 1794578999.0154781, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "username", "nth": 0, "text": "standard_user", "value": "username"}, "blocked": false}
+{"t": 1794579003.392843, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "username", "nth": 0, "value": "username"}, "blocked": false}
+{"t": 1794579011.357871, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "password", "nth": 0, "text": "secret_sauce", "value": "password"}, "blocked": false}
+{"t": 1794579015.3225589, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "login-button", "nth": 0, "value": "login-button"}, "blocked": false}
+{"t": 1794579021.0108092, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "header-container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794579021.381173, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "primary-header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794579030.138804, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "inventory-sidebar-link", "nth": 0, "value": "inventory-sidebar-link"}, "blocked": false}
+{"t": 1794579040.163983, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "dynamic-catalog-sidebar-link", "nth": 0, "value": "dynamic-catalog-sidebar-link"}, "blocked": false}
+{"t": 1794579236.004192, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "header-container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794579236.526977, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "primary-header", "nth": 0, "value": "primary-header"}, "blocked": false}

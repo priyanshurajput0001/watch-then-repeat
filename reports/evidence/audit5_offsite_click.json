@@ -1,0 +1,18 @@
+{
+  "hook_denies_goto_offsite": true,
+  "hook_deny_reason": "Blocked: navigation outside saucedemo.com (https://twitter.com/SauceLabs)",
+  "social_links": [
+    "https://saucelabs.com/",
+    "https://x.com/saucelabs",
+    "https://www.facebook.com/saucelabs",
+    "https://www.linkedin.com/company/sauce-labs/"
+  ],
+  "open_tabs": [
+    "https://www.saucedemo.com/inventory.html",
+    "https://x.com/saucelabs"
+  ],
+  "url_after_click": "https://www.saucedemo.com/inventory.html",
+  "navigated_offsite": true,
+  "route_handler_aborts": false,
+  "VERDICT": "hook denies browser_goto off-site: True; off-site CLICK is NOT stopped (navigated or attempted); route layer enforces nothing (logs only on /checkout- pages)"
+}

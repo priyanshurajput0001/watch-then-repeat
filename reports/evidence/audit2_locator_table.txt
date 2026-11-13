@@ -1,0 +1,19 @@
+Per-step locator table from recordings/saucedemo_checkout/steps.json (primary first, then fallbacks)
+ n action  primary locator                                      fallback kinds           risks
+ 1 fill    get_by_test_id("username")                           role,label,placeholder,CSS-ID -
+ 2 fill    get_by_test_id("password")                           role,label,placeholder,CSS-ID -
+ 3 click   get_by_test_id("login-button")                       role,CSS-ID              -
+ 4 select  get_by_test_id("product-sort-container")             role,label               -
+ 5 click   get_by_test_id("add-to-cart-sauce-labs-onesie")      role,text,CSS-ID         role-fallback matches 6 buttons (strict mode); text-fallback matches 6 buttons
+ 6 click   get_by_test_id("add-to-cart-sauce-labs-bike-light")  role,text,CSS-ID         role-fallback matches 6 buttons (strict mode); text-fallback matches 6 buttons
+ 7 click   get_by_test_id("shopping-cart-link")                 role,label,text          text "2" ambiguous
+ 8 click   get_by_test_id("checkout")                           role,text,CSS-ID         -
+ 9 fill    get_by_test_id("firstName")                          role,label,placeholder,CSS-ID -
+10 fill    get_by_test_id("lastName")                           role,label,placeholder,CSS-ID -
+11 fill    get_by_test_id("postalCode")                         role,label,placeholder,CSS-ID -
+12 click   get_by_test_id("continue")                           role,CSS-ID              -
+13 read    get_by_test_id("total-label")                        text                     -
+14 click   get_by_test_id("finish")                             role,text,CSS-ID         -
+
+CSS-ID fallback lines: last-resort per priority chain (data-test > role > label > placeholder > text > css id)
+nth()/nth-child: NOT present anywhere in the skill (verified by test_skill_structure.py)

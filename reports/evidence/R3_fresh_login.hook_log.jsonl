@@ -1,0 +1,81 @@
+{"t": 1794569552.8142662, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794569560.996649, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_goto,mcp__browser__browser_load_session,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_url,mcp__browser__browser_all_texts", "max_results": 8}, "blocked": false}
+{"t": 1794569561.437849, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json", "limit": 50}, "blocked": true}
+{"t": 1794569568.220612, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794569575.776701, "tool": "ToolSearch", "input": {"query": "+session save state storage", "max_results": 5}, "blocked": false}
+{"t": 1794569576.0810409, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/"}, "blocked": false}
+{"t": 1794569587.0349262, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "username", "name": "Username", "nth": 0, "text": "standard_user"}, "blocked": false}
+{"t": 1794569593.158955, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "username", "name": "Username", "nth": 0}, "blocked": false}
+{"t": 1794569612.934677, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "username", "name": "Username"}, "blocked": false}
+{"t": 1794569621.154958, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "password", "name": "Password", "nth": 0, "text": "secret_sauce"}, "blocked": false}
+{"t": 1794569624.5644531, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "login-button", "name": "Login", "nth": 0}, "blocked": false}
+{"t": 1794569632.674444, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "header-container", "name": "Header container", "nth": 0}, "blocked": false}
+{"t": 1794569632.988432, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "primary-header", "name": "Primary header", "nth": 0}, "blocked": false}
+{"t": 1794569633.4440541, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "inventory-sidebar-link", "name": "All Items sidebar link", "nth": 0}, "blocked": false}
+{"t": 1794569643.498741, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "dynamic-catalog-sidebar-link", "name": "Dynamic Catalog sidebar link", "nth": 0}, "blocked": false}
+{"t": 1794569769.178317, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "header-container", "name": "Header container"}, "blocked": false}
+{"t": 1794569769.479817, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "primary-header", "name": "Primary header"}, "blocked": false}
+{"t": 1794569769.899595, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-sidebar-link", "name": "All Items sidebar link"}, "blocked": false}
+{"t": 1794569779.9156969, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "dynamic-catalog-sidebar-link", "name": "Dynamic Catalog sidebar link"}, "blocked": false}
+{"t": 1794569789.932961, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794569916.587731, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794569934.149951, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Secondary header", "nth": 0, "value": "secondary-header"}, "blocked": false}
+{"t": 1794569934.529567, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Active option", "nth": 0, "value": "active-option"}, "blocked": false}
+{"t": 1794569934.9214709, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Inventory container", "nth": 0, "value": "inventory-container"}, "blocked": false}
+{"t": 1794569935.300973, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Inventory list", "nth": 0, "value": "inventory-list"}, "blocked": false}
+{"t": 1794569935.73973, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "First inventory item", "nth": 0, "value": "inventory-item"}, "blocked": false}
+{"t": 1794569946.560918, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Add to cart", "nth": 0, "value": "add-to-cart-sauce-labs-onesie"}, "blocked": false}
+{"t": 1794569950.886438, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Shopping cart link", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}
+{"t": 1794569951.055039, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Shopping cart badge", "nth": 0, "value": "shopping-cart-badge"}, "blocked": false}
+{"t": 1794569956.8065221, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Add to cart", "nth": 0, "value": "add-to-cart-sauce-labs-bike-light"}, "blocked": false}
+{"t": 1794569961.471393, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Shopping cart link", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}
+{"t": 1794569961.796902, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Shopping cart badge", "nth": 0, "value": "shopping-cart-badge"}, "blocked": false}
+{"t": 1794569975.0874429, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Cart, 2 items", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}
+{"t": 1794569982.8076549, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794569983.5903559, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Primary header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794569983.955696, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Secondary header", "nth": 0, "value": "secondary-header"}, "blocked": false}
+{"t": 1794569984.316916, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}
+{"t": 1794570004.46962, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Checkout", "nth": 0, "value": "checkout"}, "blocked": false}
+{"t": 1794570033.371477, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794570033.675613, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Secondary header", "nth": 0, "value": "secondary-header"}, "blocked": false}
+{"t": 1794570034.050914, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}
+{"t": 1794570034.411223, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Checkout info container", "nth": 0, "value": "checkout-info-container"}, "blocked": false}
+{"t": 1794570054.307536, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "First Name", "nth": 0, "text": "Test", "value": "firstName"}, "blocked": false}
+{"t": 1794570226.96322, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Last Name", "nth": 0, "text": "User", "value": "lastName"}, "blocked": false}
+{"t": 1794570232.4737449, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Zip/Postal Code", "nth": 0, "text": "12345", "value": "postalCode"}, "blocked": false}
+{"t": 1794570242.087666, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Continue", "nth": 0, "value": "continue"}, "blocked": false}
+{"t": 1794570264.859642, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794570287.11303, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "Login button", "value": "login-button"}, "blocked": false}
+{"t": 1794570287.4656682, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "Header container", "value": "header-container"}, "blocked": false}
+{"t": 1794570297.491455, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "Error message", "value": "error"}, "blocked": false}
+{"t": 1794570362.754721, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Username", "nth": 0, "text": "standard_user", "value": "username"}, "blocked": false}
+{"t": 1794570369.332211, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Password", "nth": 0, "text": "secret_sauce", "value": "password"}, "blocked": false}
+{"t": 1794570377.3755798, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Login", "nth": 0, "value": "login-button"}, "blocked": false}
+{"t": 1794570390.134528, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Primary header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794570390.297994, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "Shopping cart badge", "value": "shopping-cart-badge"}, "blocked": false}
+{"t": 1794570403.2046561, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794570408.448632, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Active option", "nth": 0, "value": "active-option"}, "blocked": false}
+{"t": 1794570408.852909, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "First inventory item", "nth": 0, "value": "inventory-item"}, "blocked": false}
+{"t": 1794570418.352486, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Cart, 2 items", "nth": 0, "value": "shopping-cart-link"}, "blocked": false}
+{"t": 1794570428.43496, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794570428.796566, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Primary header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794570429.0875719, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}
+{"t": 1794570429.435771, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "Cart items", "value": "inventory-item"}, "blocked": false}
+{"t": 1794570437.071413, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Checkout", "nth": 0, "value": "checkout"}, "blocked": false}
+{"t": 1794570442.570802, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794570442.898499, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}
+{"t": 1794570443.435682, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Checkout info container", "nth": 0, "value": "checkout-info-container"}, "blocked": false}
+{"t": 1794570449.679039, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "First Name", "nth": 0, "text": "Test", "value": "firstName"}, "blocked": false}
+{"t": 1794570456.476746, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Last Name", "nth": 0, "text": "User", "value": "lastName"}, "blocked": false}
+{"t": 1794570461.909318, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "name": "Zip/Postal Code", "nth": 0, "text": "12345", "value": "postalCode"}, "blocked": false}
+{"t": 1794570467.8952608, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Continue", "nth": 0, "value": "continue"}, "blocked": false}
+{"t": 1794570473.79694, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794570474.162581, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Secondary header", "nth": 0, "value": "secondary-header"}, "blocked": false}
+{"t": 1794570474.5740302, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}
+{"t": 1794570474.94652, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Checkout summary container", "nth": 0, "value": "checkout-summary-container"}, "blocked": false}
+{"t": 1794570482.145716, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Total label", "nth": 0, "value": "total-label"}, "blocked": false}
+{"t": 1794570498.044575, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Finish", "nth": 0, "value": "finish"}, "blocked": false}
+{"t": 1794570514.1965492, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794570514.490535, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Primary header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794570514.872405, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Secondary header", "nth": 0, "value": "secondary-header"}, "blocked": false}
+{"t": 1794570515.280674, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "Title", "nth": 0, "value": "title"}, "blocked": false}

@@ -1,0 +1,154 @@
+[
+  {
+    "tool": "Read",
+    "input": {
+      "file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_check_tampered.md"
+    }
+  },
+  {
+    "tool": "ToolSearch",
+    "input": {
+      "query": "select:mcp__browser__browser_all_texts,mcp__browser__browser_click,mcp__browser__browser_fill,mcp__browser__browser_goto,mcp__browser__browser_load_session,mcp__browser__browser_read_text,mcp__browser__browser_select,mcp__browser__browser_url",
+      "max_results": 8
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_load_session",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_goto",
+    "input": {
+      "url": "https://www.saucedemo.com/"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_url",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "css",
+      "value": "body",
+      "name": "body"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_goto",
+    "input": {
+      "url": "https://www.saucedemo.com/inventory.html"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_url",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_select",
+    "input": {
+      "kind": "test_id",
+      "value": "product-sort-container",
+      "option": "lohi"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "value": "secondary-header",
+      "name": "secondary-header",
+      "nth": 0
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "value": "active-option",
+      "name": "active-option",
+      "nth": 0
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory-container",
+      "nth": 0,
+      "value": "inventory-container"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory-list",
+      "nth": 0,
+      "value": "inventory-list"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory-item",
+      "nth": 0,
+      "value": "inventory-item"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "shopping-cart-badge",
+      "nth": 0,
+      "value": "shopping-cart-badge"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "add-to-cart-sauce-labs-onesie",
+      "nth": 0,
+      "value": "add-to-cart-sauce-labs-onesie"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "shopping-cart-link",
+      "nth": 0,
+      "value": "shopping-cart-link"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "shopping-cart-badge",
+      "nth": 0,
+      "value": "shopping-cart-badge"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "role",
+      "name": "Add to cart",
+      "nth": 0,
+      "value": "button"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "shopping-cart-link",
+      "nth": 0,
+      "value": "shopping-cart-link"
+    }
+  }
+]

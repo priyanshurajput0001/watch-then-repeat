@@ -1,0 +1,5 @@
+[claude-code:unrecognized_model] {"model":"internal-glm-5.3-flash","query_source":"sdk"}
+[claude-code:unrecognized_model] {"model":"internal-glm-5.3-flash","query_source":"sdk"}
+real 422.14
+user 16.98
+sys 4.92

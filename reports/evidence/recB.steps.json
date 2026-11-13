@@ -1,0 +1,1212 @@
+[
+  {
+    "action": "fill",
+    "desc": {
+      "tag": "input",
+      "testid": "username",
+      "role": "textbox",
+      "name": "Username",
+      "label": "Username",
+      "placeholder": "Username",
+      "text": "",
+      "id": "user-name"
+    },
+    "value": "standard_user",
+    "shown": null,
+    "before": {
+      "url": "/",
+      "texts": {
+        "login-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-password": "Password for all users: secret_sauce"
+      }
+    },
+    "intent": "Log in with the demo user shown on the login page",
+    "n": 1,
+    "after": {
+      "url": "/",
+      "texts": {
+        "login-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-password": "Password for all users: secret_sauce"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"username\")",
+      "get_by_role(\"textbox\", name=\"Username\", exact=True)",
+      "get_by_label(\"Username\", exact=True)",
+      "get_by_placeholder(\"Username\", exact=True)",
+      "locator(\"#user-name\")"
+    ],
+    "checks": [
+      {
+        "type": "value",
+        "value": "standard_user"
+      }
+    ]
+  },
+  {
+    "action": "fill",
+    "desc": {
+      "tag": "input",
+      "testid": "password",
+      "role": "textbox",
+      "name": "Password",
+      "label": "Password",
+      "placeholder": "Password",
+      "text": "",
+      "id": "password"
+    },
+    "value": "secret_sauce",
+    "shown": null,
+    "before": {
+      "url": "/",
+      "texts": {
+        "login-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-password": "Password for all users: secret_sauce"
+      }
+    },
+    "intent": "Log in with the demo user shown on the login page",
+    "n": 2,
+    "after": {
+      "url": "/",
+      "texts": {
+        "login-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-password": "Password for all users: secret_sauce"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"password\")",
+      "get_by_role(\"textbox\", name=\"Password\", exact=True)",
+      "get_by_label(\"Password\", exact=True)",
+      "get_by_placeholder(\"Password\", exact=True)",
+      "locator(\"#password\")"
+    ],
+    "checks": [
+      {
+        "type": "value",
+        "value": "secret_sauce"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "input",
+      "testid": "login-button",
+      "role": "button",
+      "name": "Login",
+      "label": "",
+      "placeholder": null,
+      "text": "",
+      "id": "login-button"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/",
+      "texts": {
+        "login-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials-container": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-credentials": "Accepted usernames are: standard_user locked_out_user problem_user performance_g",
+        "login-password": "Password for all users: secret_sauce"
+      }
+    },
+    "intent": "Log in with the demo user shown on the login page",
+    "n": 3,
+    "after": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "secondary-header": "Products Name (A to Z) Name (A to Z) Name (Z to A) Price (low to high) Price (hi",
+        "title": "Products",
+        "active-option": "Name (A to Z)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-list": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-item": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-item-description": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "inventory-item-name": "Sauce Labs Backpack",
+        "inventory-item-desc": "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromis",
+        "inventory-item-price": "$29.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"login-button\")",
+      "get_by_role(\"button\", name=\"Login\", exact=True)",
+      "locator(\"#login-button\")"
+    ],
+    "checks": [
+      {
+        "type": "url",
+        "value": "/inventory.html"
+      },
+      {
+        "type": "text",
+        "testid": "header-container",
+        "value": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
+      },
+      {
+        "type": "text",
+        "testid": "primary-header",
+        "value": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag"
+      },
+      {
+        "type": "text",
+        "testid": "inventory-sidebar-link",
+        "value": "All Items"
+      },
+      {
+        "type": "text",
+        "testid": "dynamic-catalog-sidebar-link",
+        "value": "Dynamic Catalog"
+      }
+    ]
+  },
+  {
+    "action": "select",
+    "desc": {
+      "tag": "select",
+      "testid": "product-sort-container",
+      "role": "combobox",
+      "name": "Sort products",
+      "label": "Sort products",
+      "placeholder": null,
+      "text": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+      "id": null
+    },
+    "value": "lohi",
+    "shown": "Price (low to high)",
+    "before": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "secondary-header": "Products Name (A to Z) Name (A to Z) Name (Z to A) Price (low to high) Price (hi",
+        "title": "Products",
+        "active-option": "Name (A to Z)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-list": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-item": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "inventory-item-description": "Sauce Labs Backpack carry.allTheThings() with the sleek, streamlined Sly Pack th",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "inventory-item-name": "Sauce Labs Backpack",
+        "inventory-item-desc": "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromis",
+        "inventory-item-price": "$29.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Sort products by price, low to high",
+    "n": 4,
+    "after": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"product-sort-container\")",
+      "get_by_role(\"combobox\", name=\"Sort products\", exact=True)",
+      "get_by_label(\"Sort products\", exact=True)"
+    ],
+    "checks": [
+      {
+        "type": "text",
+        "testid": "secondary-header",
+        "value": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri"
+      },
+      {
+        "type": "text",
+        "testid": "active-option",
+        "value": "Price (low to high)"
+      },
+      {
+        "type": "text",
+        "testid": "inventory-container",
+        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+      },
+      {
+        "type": "text",
+        "testid": "inventory-list",
+        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+      },
+      {
+        "type": "text",
+        "testid": "inventory-item",
+        "value": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "button",
+      "testid": "add-to-cart-sauce-labs-onesie",
+      "role": "button",
+      "name": "Add to cart",
+      "label": "",
+      "placeholder": null,
+      "text": "Add to cart",
+      "id": "add-to-cart-sauce-labs-onesie"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Add the two cheapest items (first two after sorting)",
+    "n": 5,
+    "after": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "shopping-cart-link": "1",
+        "shopping-cart-badge": "1",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"add-to-cart-sauce-labs-onesie\")",
+      "get_by_role(\"button\", name=\"Add to cart\", exact=True)",
+      "get_by_text(\"Add to cart\", exact=True)",
+      "locator(\"#add-to-cart-sauce-labs-onesie\")"
+    ],
+    "checks": [
+      {
+        "type": "text",
+        "testid": "shopping-cart-link",
+        "value": "1"
+      },
+      {
+        "type": "text",
+        "testid": "shopping-cart-badge",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "button",
+      "testid": "add-to-cart-sauce-labs-bike-light",
+      "role": "button",
+      "name": "Add to cart",
+      "label": "",
+      "placeholder": null,
+      "text": "Add to cart",
+      "id": "add-to-cart-sauce-labs-bike-light"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "shopping-cart-link": "1",
+        "shopping-cart-badge": "1",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Add the two cheapest items (first two after sorting)",
+    "n": 6,
+    "after": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"add-to-cart-sauce-labs-bike-light\")",
+      "get_by_role(\"button\", name=\"Add to cart\", exact=True)",
+      "get_by_text(\"Add to cart\", exact=True)",
+      "locator(\"#add-to-cart-sauce-labs-bike-light\")"
+    ],
+    "checks": [
+      {
+        "type": "text",
+        "testid": "shopping-cart-link",
+        "value": "2"
+      },
+      {
+        "type": "text",
+        "testid": "shopping-cart-badge",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "a",
+      "testid": "shopping-cart-link",
+      "role": "button",
+      "name": "Cart, 2 items",
+      "label": "Cart, 2 items",
+      "placeholder": null,
+      "text": "2",
+      "id": null
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/inventory.html",
+      "texts": {
+        "header-container": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "primary-header": "Open Menu All Items Dynamic Catalog About Logout Reset App State Close Menu Swag",
+        "inventory-sidebar-link": "All Items",
+        "dynamic-catalog-sidebar-link": "Dynamic Catalog",
+        "about-sidebar-link": "About",
+        "logout-sidebar-link": "Logout",
+        "reset-sidebar-link": "Reset App State",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Products Price (low to high) Name (A to Z) Name (Z to A) Price (low to high) Pri",
+        "title": "Products",
+        "active-option": "Price (low to high)",
+        "product-sort-container": "Name (A to Z) Name (Z to A) Price (low to high) Price (high to low)",
+        "inventory-container": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-list": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "inventory-item-description": "Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in d",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "item-1-title-link": "Sauce Labs Bolt T-Shirt",
+        "item-3-title-link": "Test.allTheThings() T-Shirt (Red)",
+        "item-4-title-link": "Sauce Labs Backpack",
+        "item-5-title-link": "Sauce Labs Fleece Jacket",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Open the cart and start checkout",
+    "n": 7,
+    "after": {
+      "url": "/cart.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Your Cart",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Your Cart",
+        "title": "Your Cart",
+        "cart-contents-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"shopping-cart-link\")",
+      "get_by_role(\"button\", name=\"Cart, 2 items\", exact=True)",
+      "get_by_label(\"Cart, 2 items\", exact=True)",
+      "get_by_text(\"2\", exact=True)"
+    ],
+    "checks": [
+      {
+        "type": "url",
+        "value": "/cart.html"
+      },
+      {
+        "type": "text",
+        "testid": "header-container",
+        "value": "Open Menu Swag Labs 2 Your Cart"
+      },
+      {
+        "type": "text",
+        "testid": "primary-header",
+        "value": "Open Menu Swag Labs 2"
+      },
+      {
+        "type": "text",
+        "testid": "secondary-header",
+        "value": "Your Cart"
+      },
+      {
+        "type": "text",
+        "testid": "title",
+        "value": "Your Cart"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "button",
+      "testid": "checkout",
+      "role": "button",
+      "name": "Checkout",
+      "label": "",
+      "placeholder": null,
+      "text": "Checkout",
+      "id": "checkout"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/cart.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Your Cart",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Your Cart",
+        "title": "Your Cart",
+        "cart-contents-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Open the cart and start checkout",
+    "n": 8,
+    "after": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"checkout\")",
+      "get_by_role(\"button\", name=\"Checkout\", exact=True)",
+      "get_by_text(\"Checkout\", exact=True)",
+      "locator(\"#checkout\")"
+    ],
+    "checks": [
+      {
+        "type": "url",
+        "value": "/checkout-step-one.html"
+      },
+      {
+        "type": "text",
+        "testid": "header-container",
+        "value": "Open Menu Swag Labs 2 Checkout: Your Information"
+      },
+      {
+        "type": "text",
+        "testid": "secondary-header",
+        "value": "Checkout: Your Information"
+      },
+      {
+        "type": "text",
+        "testid": "title",
+        "value": "Checkout: Your Information"
+      },
+      {
+        "type": "text",
+        "testid": "checkout-info-container",
+        "value": "Cancel"
+      }
+    ]
+  },
+  {
+    "action": "fill",
+    "desc": {
+      "tag": "input",
+      "testid": "firstName",
+      "role": "textbox",
+      "name": "First Name",
+      "label": "First Name",
+      "placeholder": "First Name",
+      "text": "",
+      "id": "first-name"
+    },
+    "value": "Test",
+    "shown": null,
+    "before": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Enter made-up checkout details",
+    "n": 9,
+    "after": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"firstName\")",
+      "get_by_role(\"textbox\", name=\"First Name\", exact=True)",
+      "get_by_label(\"First Name\", exact=True)",
+      "get_by_placeholder(\"First Name\", exact=True)",
+      "locator(\"#first-name\")"
+    ],
+    "checks": [
+      {
+        "type": "value",
+        "value": "Test"
+      }
+    ]
+  },
+  {
+    "action": "fill",
+    "desc": {
+      "tag": "input",
+      "testid": "lastName",
+      "role": "textbox",
+      "name": "Last Name",
+      "label": "Last Name",
+      "placeholder": "Last Name",
+      "text": "",
+      "id": "last-name"
+    },
+    "value": "User",
+    "shown": null,
+    "before": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Enter made-up checkout details",
+    "n": 10,
+    "after": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"lastName\")",
+      "get_by_role(\"textbox\", name=\"Last Name\", exact=True)",
+      "get_by_label(\"Last Name\", exact=True)",
+      "get_by_placeholder(\"Last Name\", exact=True)",
+      "locator(\"#last-name\")"
+    ],
+    "checks": [
+      {
+        "type": "value",
+        "value": "User"
+      }
+    ]
+  },
+  {
+    "action": "fill",
+    "desc": {
+      "tag": "input",
+      "testid": "postalCode",
+      "role": "textbox",
+      "name": "Zip/Postal Code",
+      "label": "Zip/Postal Code",
+      "placeholder": "Zip/Postal Code",
+      "text": "",
+      "id": "postal-code"
+    },
+    "value": "12345",
+    "shown": null,
+    "before": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Enter made-up checkout details",
+    "n": 11,
+    "after": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"postalCode\")",
+      "get_by_role(\"textbox\", name=\"Zip/Postal Code\", exact=True)",
+      "get_by_label(\"Zip/Postal Code\", exact=True)",
+      "get_by_placeholder(\"Zip/Postal Code\", exact=True)",
+      "locator(\"#postal-code\")"
+    ],
+    "checks": [
+      {
+        "type": "value",
+        "value": "12345"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "input",
+      "testid": "continue",
+      "role": "button",
+      "name": "Continue",
+      "label": "",
+      "placeholder": null,
+      "text": "",
+      "id": "continue"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/checkout-step-one.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Your Information",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Your Information",
+        "title": "Checkout: Your Information",
+        "checkout-info-container": "Cancel",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Enter made-up checkout details",
+    "n": 12,
+    "after": {
+      "url": "/checkout-step-two.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Overview",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Overview",
+        "title": "Checkout: Overview",
+        "checkout-summary-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "payment-info-label": "Payment Information:",
+        "payment-info-value": "SauceCard #31337",
+        "shipping-info-label": "Shipping Information:",
+        "shipping-info-value": "Free Pony Express Delivery!",
+        "total-info-label": "Price Total",
+        "subtotal-label": "Item total: $17.98",
+        "tax-label": "Tax: $1.44",
+        "total-label": "Total: $19.42",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"continue\")",
+      "get_by_role(\"button\", name=\"Continue\", exact=True)",
+      "locator(\"#continue\")"
+    ],
+    "checks": [
+      {
+        "type": "url",
+        "value": "/checkout-step-two.html"
+      },
+      {
+        "type": "text",
+        "testid": "header-container",
+        "value": "Open Menu Swag Labs 2 Checkout: Overview"
+      },
+      {
+        "type": "text",
+        "testid": "secondary-header",
+        "value": "Checkout: Overview"
+      },
+      {
+        "type": "text",
+        "testid": "title",
+        "value": "Checkout: Overview"
+      },
+      {
+        "type": "text",
+        "testid": "checkout-summary-container",
+        "value": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat"
+      }
+    ]
+  },
+  {
+    "action": "read",
+    "desc": {
+      "tag": "div",
+      "testid": "total-label",
+      "role": null,
+      "name": "Total: $19.42",
+      "label": "",
+      "placeholder": null,
+      "text": "Total: $19.42",
+      "id": null
+    },
+    "value": "Total: $19.42",
+    "shown": "order total",
+    "before": {
+      "url": "/checkout-step-two.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Overview",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Overview",
+        "title": "Checkout: Overview",
+        "checkout-summary-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "payment-info-label": "Payment Information:",
+        "payment-info-value": "SauceCard #31337",
+        "shipping-info-label": "Shipping Information:",
+        "shipping-info-value": "Free Pony Express Delivery!",
+        "total-info-label": "Price Total",
+        "subtotal-label": "Item total: $17.98",
+        "tax-label": "Tax: $1.44",
+        "total-label": "Total: $19.42",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Read the order total on the overview page",
+    "n": 13,
+    "after": {
+      "url": "/checkout-step-two.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Overview",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Overview",
+        "title": "Checkout: Overview",
+        "checkout-summary-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "payment-info-label": "Payment Information:",
+        "payment-info-value": "SauceCard #31337",
+        "shipping-info-label": "Shipping Information:",
+        "shipping-info-value": "Free Pony Express Delivery!",
+        "total-info-label": "Price Total",
+        "subtotal-label": "Item total: $17.98",
+        "tax-label": "Tax: $1.44",
+        "total-label": "Total: $19.42",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"total-label\")",
+      "get_by_text(\"Total: $19.42\", exact=True)"
+    ],
+    "checks": [
+      {
+        "type": "nonempty"
+      }
+    ]
+  },
+  {
+    "action": "click",
+    "desc": {
+      "tag": "button",
+      "testid": "finish",
+      "role": "button",
+      "name": "Finish",
+      "label": "",
+      "placeholder": null,
+      "text": "Finish",
+      "id": "finish"
+    },
+    "value": null,
+    "shown": null,
+    "before": {
+      "url": "/checkout-step-two.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs 2 Checkout: Overview",
+        "primary-header": "Open Menu Swag Labs 2",
+        "shopping-cart-link": "2",
+        "shopping-cart-badge": "2",
+        "secondary-header": "Checkout: Overview",
+        "title": "Checkout: Overview",
+        "checkout-summary-container": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-list": "QTYDescription 1 Sauce Labs Onesie Rib snap infant onesie for the junior automat",
+        "cart-quantity-label": "QTY",
+        "cart-desc-label": "Description",
+        "inventory-item": "1 Sauce Labs Onesie Rib snap infant onesie for the junior automation engineer in",
+        "item-quantity": "1",
+        "item-2-title-link": "Sauce Labs Onesie",
+        "inventory-item-name": "Sauce Labs Onesie",
+        "inventory-item-desc": "Rib snap infant onesie for the junior automation engineer in development. Reinfo",
+        "inventory-item-price": "$7.99",
+        "item-0-title-link": "Sauce Labs Bike Light",
+        "payment-info-label": "Payment Information:",
+        "payment-info-value": "SauceCard #31337",
+        "shipping-info-label": "Shipping Information:",
+        "shipping-info-value": "Free Pony Express Delivery!",
+        "total-info-label": "Price Total",
+        "subtotal-label": "Item total: $17.98",
+        "tax-label": "Tax: $1.44",
+        "total-label": "Total: $19.42",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "intent": "Finish the order and confirm the thank-you page",
+    "n": 14,
+    "after": {
+      "url": "/checkout-complete.html",
+      "texts": {
+        "header-container": "Open Menu Swag Labs Checkout: Complete!",
+        "primary-header": "Open Menu Swag Labs",
+        "secondary-header": "Checkout: Complete!",
+        "title": "Checkout: Complete!",
+        "checkout-complete-container": "Thank you for your order! Your order has been dispatched, and will arrive just a",
+        "complete-header": "Thank you for your order!",
+        "complete-text": "Your order has been dispatched, and will arrive just as fast as the pony can get",
+        "footer": "X Facebook LinkedIn \u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | P",
+        "social-x": "X",
+        "social-facebook": "Facebook",
+        "social-linkedin": "LinkedIn",
+        "footer-copy": "\u00a9 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy"
+      }
+    },
+    "locators": [
+      "get_by_test_id(\"finish\")",
+      "get_by_role(\"button\", name=\"Finish\", exact=True)",
+      "get_by_text(\"Finish\", exact=True)",
+      "locator(\"#finish\")"
+    ],
+    "checks": [
+      {
+        "type": "url",
+        "value": "/checkout-complete.html"
+      },
+      {
+        "type": "text",
+        "testid": "header-container",
+        "value": "Open Menu Swag Labs Checkout: Complete!"
+      },
+      {
+        "type": "text",
+        "testid": "primary-header",
+        "value": "Open Menu Swag Labs"
+      },
+      {
+        "type": "text",
+        "testid": "secondary-header",
+        "value": "Checkout: Complete!"
+      },
+      {
+        "type": "text",
+        "testid": "title",
+        "value": "Checkout: Complete!"
+      }
+    ]
+  }
+]

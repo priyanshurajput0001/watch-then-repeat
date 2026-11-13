@@ -1,0 +1,3 @@
+ M recordings/saucedemo_checkout/trace.zip
+?? reports/
+?? tests/acceptance/

@@ -1,0 +1,17 @@
+{"t": 1794578354.632187, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_total_tampered.md"}, "blocked": false}
+{"t": 1794578377.0110562, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_url,mcp__browser__browser_all_texts", "max_results": 8}, "blocked": false}
+{"t": 1794578391.314955, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794578396.748784, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/"}, "blocked": false}
+{"t": 1794578400.9649012, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794578408.7793999, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "login-container", "name": "login container", "nth": 0}, "blocked": false}
+{"t": 1794578415.084517, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "username", "name": "Username", "nth": 0, "text": "standard_user"}, "blocked": false}
+{"t": 1794578418.286658, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "username", "name": "Username field", "nth": 0}, "blocked": false}
+{"t": 1794578427.9607959, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "username", "name": "Username field"}, "blocked": false}
+{"t": 1794578435.942538, "tool": "ToolSearch", "input": {"query": "+browser evaluate javascript attribute value input screenshot", "max_results": 10}, "blocked": false}
+{"t": 1794578444.81356, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "password", "name": "Password", "nth": 0, "text": "secret_sauce"}, "blocked": false}
+{"t": 1794578448.3606021, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "name": "Login button", "nth": 0, "value": "login-button"}, "blocked": false}
+{"t": 1794578454.321882, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "header container", "nth": 0, "value": "header-container"}, "blocked": false}
+{"t": 1794578468.096253, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "primary header", "nth": 0, "value": "primary-header"}, "blocked": false}
+{"t": 1794578473.775879, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "inventory sidebar link", "nth": 0, "value": "inventory-sidebar-link"}, "blocked": false}
+{"t": 1794578497.137569, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "name": "dynamic catalog sidebar link", "nth": 0, "value": "dynamic-catalog-sidebar-link"}, "blocked": false}
+{"t": 1794578548.9201322, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "name": "sidebar links", "value": "inventory-sidebar-link"}, "blocked": false}

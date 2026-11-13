@@ -1,0 +1,135 @@
+[
+  {
+    "tool": "Read",
+    "input": {
+      "file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_total_tampered.md"
+    }
+  },
+  {
+    "tool": "ToolSearch",
+    "input": {
+      "query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_url,mcp__browser__browser_all_texts",
+      "max_results": 8
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_load_session",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_goto",
+    "input": {
+      "url": "https://www.saucedemo.com/"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_url",
+    "input": {}
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "value": "login-container",
+      "name": "login container",
+      "nth": 0
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_fill",
+    "input": {
+      "kind": "test_id",
+      "value": "username",
+      "name": "Username",
+      "nth": 0,
+      "text": "standard_user"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "value": "username",
+      "name": "Username field",
+      "nth": 0
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "value": "username",
+      "name": "Username field"
+    }
+  },
+  {
+    "tool": "ToolSearch",
+    "input": {
+      "max_results": 10,
+      "query": "+browser evaluate javascript attribute value input screenshot"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_fill",
+    "input": {
+      "kind": "test_id",
+      "value": "password",
+      "name": "Password",
+      "nth": 0,
+      "text": "secret_sauce"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_click",
+    "input": {
+      "kind": "test_id",
+      "name": "Login button",
+      "nth": 0,
+      "value": "login-button"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "header container",
+      "nth": 0,
+      "value": "header-container"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "primary header",
+      "nth": 0,
+      "value": "primary-header"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "inventory sidebar link",
+      "nth": 0,
+      "value": "inventory-sidebar-link"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_read_text",
+    "input": {
+      "kind": "test_id",
+      "name": "dynamic catalog sidebar link",
+      "nth": 0,
+      "value": "dynamic-catalog-sidebar-link"
+    }
+  },
+  {
+    "tool": "mcp__browser__browser_all_texts",
+    "input": {
+      "kind": "test_id",
+      "name": "sidebar links",
+      "value": "inventory-sidebar-link"
+    }
+  }
+]

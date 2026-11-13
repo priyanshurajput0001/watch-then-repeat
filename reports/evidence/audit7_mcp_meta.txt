@@ -1,0 +1,6 @@
+hook log lines before:      151
+exit=0
+real 422.14
+user 16.98
+sys 4.92
+hook log lines after:      200 (delta 49)

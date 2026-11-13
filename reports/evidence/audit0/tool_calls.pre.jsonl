@@ -1,0 +1,136 @@
+{"t": 1794413563.300423, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794413571.636275, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_url,mcp__browser__browser_read_text,mcp__browser__browser_all_texts", "max_results": 8}, "blocked": false}
+{"t": 1794413571.9653509, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json", "limit": 5}, "blocked": true}
+{"t": 1794413579.972391, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794413584.644157, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794413588.686593, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794413592.9425762, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794413595.68227, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794413600.3207948, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-name", "name": ""}, "blocked": false}
+{"t": 1794413604.818262, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-onesie", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413607.630676, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-bike-light", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413610.857913, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "shopping-cart-badge", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413614.644209, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "shopping-cart-link", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413617.5988638, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "checkout", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413620.9009469, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "firstName", "name": "", "nth": 0, "text": "Priya"}, "blocked": false}
+{"t": 1794413624.458752, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "lastName", "name": "", "nth": 0, "text": "Demo"}, "blocked": false}
+{"t": 1794413627.3883588, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "postalCode", "name": "", "nth": 0, "text": "94103"}, "blocked": false}
+{"t": 1794413629.9691641, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "continue", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413634.171232, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "total-label", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413637.825143, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "finish", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413640.408462, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "complete-header", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413680.6110861, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794413687.699508, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_all_texts,mcp__browser__browser_url", "max_results": 8}, "blocked": false}
+{"t": 1794413687.935194, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json"}, "blocked": true}
+{"t": 1794413693.841714, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794413697.444459, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794413699.651259, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794413703.9028668, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794413707.029939, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794413712.015232, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-name", "name": ""}, "blocked": false}
+{"t": 1794413717.520438, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-onesie", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413719.2019022, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-bike-light", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413721.9353979, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "shopping-cart-badge", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413726.0295072, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "shopping-cart-link", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413728.7343922, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "checkout", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413732.245388, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "firstName", "name": "", "nth": 0, "text": "Priya"}, "blocked": false}
+{"t": 1794413734.085185, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "lastName", "name": "", "nth": 0, "text": "Demo"}, "blocked": false}
+{"t": 1794413736.771998, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "postalCode", "name": "", "nth": 0, "text": "94103"}, "blocked": false}
+{"t": 1794413741.309002, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "continue", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413744.5948942, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "total-label", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413749.889518, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "finish", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413751.431498, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "complete-header", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413759.0240698, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794413764.040252, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_all_texts,mcp__browser__browser_click,mcp__browser__browser_fill,mcp__browser__browser_goto,mcp__browser__browser_load_session,mcp__browser__browser_read_text,mcp__browser__browser_select,mcp__browser__browser_url", "max_results": 8}, "blocked": false}
+{"t": 1794413768.5369442, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json"}, "blocked": true}
+{"t": 1794413772.632525, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794413776.0620449, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794413780.929524, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794413789.121757, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794413791.752736, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794413795.498552, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-name", "name": ""}, "blocked": false}
+{"t": 1794413798.847233, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-onesie", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413801.67949, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-bike-light", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413805.681064, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "shopping-cart-badge", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413809.409302, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "shopping-cart-link", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413811.967229, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "checkout", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413815.237451, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "firstName", "name": "", "nth": 0, "text": "Priya"}, "blocked": false}
+{"t": 1794413817.8344169, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "lastName", "name": "", "nth": 0, "text": "Demo"}, "blocked": false}
+{"t": 1794413819.3947158, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "postalCode", "name": "", "nth": 0, "text": "94103"}, "blocked": false}
+{"t": 1794413822.009012, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "continue", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413824.4536572, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794413828.1008651, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "total-label", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413833.108608, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "finish", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413837.4294798, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "complete-header", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413848.594134, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout_tampered.md"}, "blocked": false}
+{"t": 1794413925.9843352, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_url,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_select,mcp__browser__browser_read_text,mcp__browser__browser_all_texts", "max_results": 8}, "blocked": false}
+{"t": 1794413926.1969779, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json"}, "blocked": true}
+{"t": 1794413935.935097, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794413940.382158, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794413943.673397, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794413953.359879, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "title", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794413961.6142569, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "hilo"}, "blocked": false}
+{"t": 1794413964.480095, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794413972.142093, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "option": "hilo", "value": "product-sort-container"}, "blocked": false}
+{"t": 1794413974.786367, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794414003.862089, "tool": "ToolSearch", "input": {"query": "select:mcp__saucedemo__record_workflow,mcp__saucedemo__replay_workflow", "max_results": 5}, "blocked": false}
+{"t": 1794414009.784099, "tool": "mcp__saucedemo__record_workflow", "input": {}, "blocked": false}
+{"t": 1794414015.403048, "tool": "mcp__saucedemo__replay_workflow", "input": {"skill_path": "skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794414020.4270809, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794414030.572547, "tool": "ToolSearch", "input": {"query": "select:mcp__browser__browser_load_session,mcp__browser__browser_goto,mcp__browser__browser_url,mcp__browser__browser_fill,mcp__browser__browser_click,mcp__browser__browser_read_text,mcp__browser__browser_all_texts,mcp__browser__browser_select", "max_results": 8}, "blocked": false}
+{"t": 1794414035.5027049, "tool": "mcp__browser__browser_load_session", "input": {}, "blocked": false}
+{"t": 1794414039.822154, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794414042.159872, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794414046.280998, "tool": "mcp__browser__browser_select", "input": {"kind": "test_id", "value": "product-sort-container", "option": "lohi"}, "blocked": false}
+{"t": 1794414048.9542139, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-price", "name": ""}, "blocked": false}
+{"t": 1794414058.008467, "tool": "mcp__browser__browser_all_texts", "input": {"kind": "test_id", "value": "inventory-item-name", "name": ""}, "blocked": false}
+{"t": 1794414061.087749, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-onesie", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414063.2627761, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "add-to-cart-sauce-labs-bike-light", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414064.9463522, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "shopping-cart-badge", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414068.861842, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "shopping-cart-link", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414071.405441, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "checkout", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414074.036125, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "firstName", "name": "", "nth": 0, "text": "Priya"}, "blocked": false}
+{"t": 1794414076.632385, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "lastName", "name": "", "nth": 0, "text": "Demo"}, "blocked": false}
+{"t": 1794414079.310622, "tool": "mcp__browser__browser_fill", "input": {"kind": "test_id", "value": "postalCode", "name": "", "nth": 0, "text": "94103"}, "blocked": false}
+{"t": 1794414081.584278, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "continue", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414082.908911, "tool": "mcp__browser__browser_url", "input": {}, "blocked": false}
+{"t": 1794414086.189424, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "total-label", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414089.502547, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "finish", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794414092.1994061, "tool": "mcp__browser__browser_read_text", "input": {"kind": "test_id", "value": "complete-header", "name": "", "nth": 0}, "blocked": false}
+{"t": 1794416827.941864, "tool": "Read", "input": {"file_path": "skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794416827.943074, "tool": "Read", "input": {"file_path": "tests/fixtures/saucedemo_checkout_tampered.md"}, "blocked": false}
+{"t": 1794416827.943321, "tool": "Read", "input": {"file_path": "artifacts/state.json"}, "blocked": true}
+{"t": 1794455405.1394382, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/"}, "blocked": false}
+{"t": 1794455405.1397681, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com/inventory.html"}, "blocked": false}
+{"t": 1794455405.139877, "tool": "mcp__browser__browser_goto", "input": {"url": "https://saucedemo.com/"}, "blocked": false}
+{"t": 1794455405.139977, "tool": "mcp__browser__browser_goto", "input": {"url": "https://example.com"}, "blocked": true}
+{"t": 1794455405.14007, "tool": "mcp__browser__browser_goto", "input": {"url": "http://evil.com"}, "blocked": true}
+{"t": 1794455405.140158, "tool": "mcp__browser__browser_goto", "input": {"url": "https://saucedemo.com.evil.com/"}, "blocked": true}
+{"t": 1794455405.1402502, "tool": "mcp__browser__browser_goto", "input": {"url": "https://evil.com/saucedemo.com"}, "blocked": true}
+{"t": 1794455405.140335, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com@evil.com/"}, "blocked": true}
+{"t": 1794455405.140413, "tool": "mcp__browser__browser_goto", "input": {"url": "https://notsaucedemo.com"}, "blocked": true}
+{"t": 1794455405.140501, "tool": "mcp__browser__browser_goto", "input": {"url": "file:///etc/passwd"}, "blocked": true}
+{"t": 1794455405.1405811, "tool": "mcp__browser__browser_goto", "input": {"url": "javascript:alert(1)"}, "blocked": true}
+{"t": 1794455405.14066, "tool": "mcp__browser__browser_goto", "input": {"url": "data:text/html,<h1>hi</h1>"}, "blocked": true}
+{"t": 1794455405.140738, "tool": "mcp__browser__browser_goto", "input": {"url": "about:blank"}, "blocked": true}
+{"t": 1794455405.140816, "tool": "mcp__browser__browser_goto", "input": {"url": "HTTPS://WWW.SAUCEDEMO.COM/"}, "blocked": false}
+{"t": 1794455405.140893, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com./inventory.html"}, "blocked": true}
+{"t": 1794455405.14097, "tool": "mcp__browser__browser_goto", "input": {"url": "https://www.saucedemo.com:8443/"}, "blocked": false}
+{"t": 1794455405.141047, "tool": "mcp__browser__browser_goto", "input": {"url": "https://saucedemo.com:8443@evil.com/"}, "blocked": true}
+{"t": 1794455405.141124, "tool": "mcp__browser__browser_goto", "input": {"url": "https://127.0.0.1/"}, "blocked": true}
+{"t": 1794455405.1411998, "tool": "mcp__browser__browser_goto", "input": {"url": "https://0x7f.0x0.0x0.0x1/"}, "blocked": true}
+{"t": 1794455405.141276, "tool": "mcp__browser__browser_goto", "input": {"url": "https://2130706433/"}, "blocked": true}
+{"t": 1794455405.141354, "tool": "mcp__browser__browser_goto", "input": {"url": "https://example.com/?next=https://saucedemo.com"}, "blocked": true}
+{"t": 1794455405.141431, "tool": "mcp__browser__browser_goto", "input": {"url": "https://example.com?q=www.saucedemo.com"}, "blocked": true}
+{"t": 1794455405.141518, "tool": "mcp__browser__browser_goto", "input": {"url": "www.saucedemo.com"}, "blocked": false}
+{"t": 1794455405.141593, "tool": "mcp__browser__browser_goto", "input": {"url": "//evil.com/saucedemo"}, "blocked": true}
+{"t": 1794455405.141778, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/saucedemo_checkout.md"}, "blocked": false}
+{"t": 1794455405.141931, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/saucedemo_checkout_tampered.md"}, "blocked": false}
+{"t": 1794455405.142045, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/artifacts/state.json"}, "blocked": true}
+{"t": 1794455405.142155, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/recordings/saucedemo_checkout/steps.json"}, "blocked": true}
+{"t": 1794455405.142256, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/hooks.py"}, "blocked": true}
+{"t": 1794455405.1423721, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/README.md"}, "blocked": true}
+{"t": 1794455405.142545, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/skills/../hooks.py"}, "blocked": true}
+{"t": 1794455405.142656, "tool": "Read", "input": {"file_path": "/Users/priyanshurajput/watch-then-repeat/tests/fixtures/not.md.txt"}, "blocked": true}
+{"t": 1794455405.142735, "tool": "mcp__browser__browser_click", "input": {"kind": "test_id", "value": "finish"}, "blocked": false}
+{"t": 1794455405.1428108, "tool": "Bash", "input": {"command": "curl https://evil.com"}, "blocked": false}

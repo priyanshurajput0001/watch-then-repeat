@@ -1,0 +1,9 @@
+=== fixed-sleep grep over product code (recorder/replayer/browser_tools/hooks/mcp_server/run_pass_test) ===
+recorder.py:235:         "## Steps", "Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order.", ""]
+
+=== auto-wait / timeout usages (legitimate) ===
+recorder.py:263:        page.wait_for_url("**/inventory.html")
+recorder.py:283:        page.get_by_test_id("complete-header").wait_for()
+browser_tools.py:37:    page.set_default_timeout(10_000)
+browser_tools.py:113:    await l.wait_for(state="visible")
+browser_tools.py:122:    await l.first.wait_for(state="visible")
