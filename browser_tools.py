@@ -1,8 +1,11 @@
 """The replay agent's ONLY browser tools. Async Playwright, auto-waiting, request logging."""
+import asyncio
 import json
 import os
+import sys
 import time
 from pathlib import Path
+from urllib.parse import urlparse
 
 from claude_agent_sdk import create_sdk_mcp_server, tool
 from playwright.async_api import async_playwright
@@ -10,21 +13,65 @@ from playwright.async_api import async_playwright
 LOGS = Path("logs")
 _S: dict = {}
 
+# Context-level allowlist (the hook only guards browser_goto; this guards the wire).
+_ALLOWED_HOSTS = {"saucedemo.com", "www.saucedemo.com"}
 
-def _ok(text):
-    return {"content": [{"type": "text", "text": str(text)}]}
+
+def is_allowed_url(url: str) -> bool:
+    """Only saucedemo.com / www.saucedemo.com over http(s), plus non-network schemes."""
+    try:
+        u = urlparse(url)
+    except ValueError:
+        return False
+    if u.scheme in ("http", "https"):
+        return u.hostname in _ALLOWED_HOSTS
+    if u.scheme == "about":
+        return url.startswith("about:blank")
+    return u.scheme in ("data", "blob")
+
+
+def _log_block(kind, url):
+    LOGS.mkdir(exist_ok=True)
+    with open(LOGS / "network.jsonl", "a") as f:
+        f.write(json.dumps({"t": time.time(), "blocked": True, "kind": kind, "url": url}) + "\n")
+    print(f"BLOCKED off-site {kind}: {url}", file=sys.stderr)
 
 
 async def _route(route):
+    url = route.request.url
+    if not is_allowed_url(url):  # context-level wall: abort before it reaches the wire
+        _log_block("request", url)
+        return await route.abort()
     page = _S.get("page")
-    url = page.url if page else ""
-    if "/checkout-" in url:  # network interception: log every request made at checkout
+    purl = page.url if page else ""
+    if "/checkout-" in purl:  # network interception: log every request made at checkout
         LOGS.mkdir(exist_ok=True)
         r = route.request
         with open(LOGS / "network.jsonl", "a") as f:
-            f.write(json.dumps({"t": time.time(), "page": url, "method": r.method,
-                                "type": r.resource_type, "url": r.url}) + "\n")
+            f.write(json.dumps({"t": time.time(), "page": purl, "method": r.method,
+                                "type": r.resource_type, "url": url}) + "\n")
     await route.continue_()
+
+
+def _guard_popup(popup):
+    """A new tab/popup must never end up off-site: close it, leaving the saucedemo
+    page (always _S['page']) as the context's active page. Never guards that page."""
+    if popup is _S.get("page"):  # the original page: route.abort already guards it
+        return
+
+    async def _close_if_offsite(url, why):
+        if not is_allowed_url(url):
+            _log_block(why, url)
+            try:
+                await popup.close()
+            except Exception:
+                pass
+    popup.on("framenavigated",
+             lambda f: f is popup.main_frame and asyncio.ensure_future(
+                 _close_if_offsite(f.url, "tab")))
+    # the first navigation can settle BEFORE the page event reaches us (an aborted
+    # popup lands on chrome-error://); judge whatever it is right now
+    asyncio.ensure_future(_close_if_offsite(popup.url, "tab"))
 
 
 async def _start(storage=None):
@@ -36,6 +83,7 @@ async def _start(storage=None):
     page = await ctx.new_page()
     page.set_default_timeout(10_000)
     await ctx.route("**/*", _route)
+    ctx.on("page", _guard_popup)  # pages opened AFTER the main one: off-site popups die
     _S.update(pw=pw, browser=browser, ctx=ctx, page=page)
 
 
