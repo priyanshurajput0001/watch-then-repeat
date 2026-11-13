@@ -13,6 +13,11 @@ from playwright.async_api import async_playwright
 LOGS = Path("logs")
 _S: dict = {}
 
+
+def _ok(text):
+    return {"content": [{"type": "text", "text": str(text)}]}
+
+
 # Context-level allowlist (the hook only guards browser_goto; this guards the wire).
 _ALLOWED_HOSTS = {"saucedemo.com", "www.saucedemo.com"}
 
