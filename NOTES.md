@@ -38,6 +38,14 @@
   badge counts and 80-char truncated text. Fixed (Fix 4): steps 7 (cart) and 12 (overview)
   demand each recorded item's full name; `test_item_checks.py` evaluates the wrong-item tamper
   fixture offline and it is caught.
+- **The agent kept going after a failed check.** Found by this session's pass test: the tampered
+  (`lohi`->`hilo`) replay read the failing sort check, continued to checkout anyway, and returned
+  19.42 (PASS 2 False). Fixed: a hard stop rule in the skill template ("If a Check fails after
+  one retry, STOP IMMEDIATELY ... `FAILED_STEP: <n>` and no ORDER_TOTAL line") and the same rule
+  in the replayer's system prompt (a failed Check means an incorrect page state, not something
+  to work around), plus strict step 4 checks (active option must equal "Price (low to high)";
+  first item's price must be lower than the second's). Re-run: the tampered replay stopped at
+  step 4 — `total=None failed=4`, PASS 2 True.
 - **Unrestricted outer MCP agent.** Found by the audit (P2): the demo sets only `allowed_tools`.
   Confirmed live this session: during the demo the outer agent ran `Bash` and attempted `Read`s.
   Not yet fixed — `mcp_server.demo()` needs `disallowed_tools`; untouched by design this session.
@@ -45,14 +53,13 @@
 ## 2. What I verified (this session, real numbers)
 
 - **PASS 1 (same total twice):** `run 1: total=19.42 failed=None`, `run 2: total=19.42
-  failed=None`, `PASS 1: True`. Five clean replays this session (verification replay, MCP demo,
-  pass runs 1-2) all returned $19.42.
-- **PASS 2 (tamper caught): NOT this run.** The tampered (`lohi`->`hilo`) replay returned
-  `total=19.42 failed=None` → `PASS 2: False`. The tool log shows why: it did a fresh login,
-  selected hilo once, read `active-option`, then added the item-pinned `onesie` + `bike-light`
-  anyway and completed. The add-to-cart locators pin specific items, so the tamper never
-  changed the cart, and this run's agent did not stop at the failing sort check. Earlier audit
-  replays of the same tamper did halt — the outcome is model-dependent.
+  failed=None`, `PASS 1: True`. Seven clean replays this session (verification replay, first
+  pass test runs 1-2, post-repair MCP demo, final pass test runs 1-2, quick-start replayer) all
+  returned $19.42.
+- **PASS 2 (tamper caught): True in the final run.** After the hard stop rule + strict step 4
+  checks, the tampered (`lohi`->`hilo`) replay stopped at step 4: `total=None failed=4`,
+  `PASS 2 (check caught the change): True`. (The earlier pass test, before those changes, had
+  returned `total=19.42 failed=None` — PASS 2 False; see section 1.)
 - **Hook URL table:** `test_hooks_unit.py` 33/33 PASS — 25-case navigation matrix (userinfo,
   subdomain-lookalike, decimal/hex IP, protocol-relative tricks), 8 Read-guard cases, log-shape
   checks; host matching is `urlparse(...).hostname` equality/suffix.
@@ -67,7 +74,10 @@
 ## 3. What I would change next
 
 - Make the demonstrator a real human recording, not a script.
-- Remove literal values from checks (the embedded total, menu texts).
+- Remove literal values from checks (the embedded total, menu texts); checks still embed
+  captured values — for example step 4's recorded prices (`$7.99`, `$9.99`) and the option label.
+- The outer MCP demo agent is still unrestricted: `mcp_server.py` sets only `allowed_tools` and
+  no `disallowed_tools` (verified in the source), so the demo agent's `Bash` is not blocked.
 - Replace item-specific add-to-cart locators with an intent-based "two cheapest" rule — this
   also removes PASS 2's blind spot, since the tamper would then actually change the cart.
 - Implement the harder network option: a deliberately failing request with the retry rule

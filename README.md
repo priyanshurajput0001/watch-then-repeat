@@ -49,11 +49,11 @@ needs to be exported. `HEADED=1` before a replay command shows the browser.
 # -> run 1: total=19.42 failed=None
 #    run 2: total=19.42 failed=None
 #    PASS 1 (same total twice): True
-#    tampered: total=<19.42 or None> failed=<None or step>
-#    PASS 2 (check caught the change): True or False — model-dependent, see NOTES
+#    tampered: total=None failed=4
+#    PASS 2 (check caught the change): True
 
-tests/acceptance/run_audit.sh                  # deterministic phases only (~15 min, no model)
-tests/acceptance/run_audit.sh --with-replays   # adds 6 agent replays (~60-90 min)
+bash tests/acceptance/run_audit.sh             # deterministic phases only (~15 min, no model; not executable, run via bash)
+bash tests/acceptance/run_audit.sh --with-replays   # adds 6 agent replays (~60-90 min)
 # -> per-phase PASS output; ends "Deterministic phases done (FAILURES=0)."
 ```
 
@@ -113,13 +113,13 @@ run through a context-level allowlist: non-saucedemo requests are aborted and lo
 - **Navigation hook**: `browser_goto` to non-saucedemo hosts denied by the PreToolUse hook (`hooks.py`), plus a context-level route that aborts off-site requests and closes off-site popups (`browser_tools.py`).
 - **Logging hook**: every tool call appended to `logs/tool_calls.jsonl` with tool, input, timestamp, blocked flag (`hooks.py`).
 - **Network interception**: requests on `/checkout-*` pages logged to `logs/network.jsonl` (`browser_tools.py _route`).
-- **Pass test**: same total twice (PASS 1 — stable, passed every run). PASS 2 (tampered skill caught) is design-intent and model-dependent: the tampered `lohi`->`hilo` skill fails the sort step's derived checks, but only an obedient agent stops there (`run_pass_test.py`; observed both outcomes this session).
+- **Pass test**: same total twice (PASS 1), then the tampered `lohi`->`hilo` skill must return no total and a failed step (PASS 2). Final run: PASS 1 True (19.42 twice) and PASS 2 True (tampered run stopped at step 4: `total=None failed=4`), enforced by the hard stop rule plus strict sort checks (`run_pass_test.py`).
 - **Tamper test**: wrong-item and altered-check fixtures under `tests/fixtures/`; `test_item_checks.py` evaluates the wrong-item one offline against the item-name checks (caught).
 
 ## Known limits
 
 - The saucedemo session cookie expires after ~10 minutes; runs longer than that fall back to a fresh login mid-flow.
-- Add-to-cart locators are item-specific (`add-to-cart-sauce-labs-onesie`, `add-to-cart-sauce-labs-bike-light`); "two cheapest" lives in the sort + intent, not the locator. Consequence: the sort tamper in PASS 2 does not change which items the locators add, and catching it rests on the agent stopping at the failing sort check — in this session's run it did not.
+- Add-to-cart locators are item-specific (`add-to-cart-sauce-labs-onesie`, `add-to-cart-sauce-labs-bike-light`); "two cheapest" lives in the sort + intent, not the locator. The tamper now fails the strict step 4 checks and the hard stop rule ends the run, but a cleverer agent could still reason past a stop instruction.
 - Only the easier network option ships: request logging on checkout pages. No deliberately failing request with retry recovery.
 - The replay model is whatever the local CLI defaults to (the SDK logs `unrecognized_model` for this environment); it is not pinned.
 - The MCP demo's outer agent is not tool-restricted beyond `allowed_tools`; `Bash` is not in its disallowed list.
