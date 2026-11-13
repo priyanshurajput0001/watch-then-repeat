@@ -16,8 +16,8 @@ events it derives steps, locators, and checks, and writes `skills/saucedemo_chec
 the only file the replay agent reads. `replayer.py` is a Claude Agent SDK agent with eight
 browser MCP tools and a PreToolUse guard hook; it follows the skill, verifies each check,
 and ends its reply with a sentinel line: `ORDER_TOTAL: $X.XX` on success, `FAILED_STEP: <n>`
-on failure. Everything is regenerated from the recording — two recorder runs in a row
-produce byte-identical `steps.json` and skill files (verified repeatedly this session).
+on failure. Everything is regenerated from the recording (two recorder runs give
+byte-identical `steps.json` and skill files).
 
 ## Setup
 
@@ -42,6 +42,12 @@ needs to be exported. `HEADED=1` before a replay command shows the browser.
 # -> agent replays the skill in a real browser; last lines:
 #    ORDER_TOTAL: $19.42 / TOTAL: 19.42 | FAILED STEP: None
 
+# Replays need a fresh session: the saucedemo cookie expires after ~10 minutes.
+# Refresh it first (scripted login, no model; also verifies logged-in + empty cart):
+.venv/bin/python tests/acceptance/refresh_session.py   # -> "VERDICT": "logged-in, cart EMPTY"
+```
+
+```bash
 .venv/bin/python mcp_server.py
 # -> MCP demo: one agent calls record_workflow then replay_workflow; reports both totals ($19.42).
 
@@ -57,22 +63,15 @@ bash tests/acceptance/run_audit.sh --with-replays   # adds 6 agent replays (~60-
 # -> per-phase PASS output; ends "Deterministic phases done (FAILURES=0)."
 ```
 
-Replays need a fresh session: the saucedemo cookie expires after ~10 minutes. Refresh it
-first (scripted login, no model; also verifies logged-in + empty cart):
-
-```bash
-.venv/bin/python tests/acceptance/refresh_session.py   # -> "VERDICT": "logged-in, cart EMPTY"
-```
-
 Offline tests (no model, no browser or local-only):
 
 ```bash
-tests/acceptance/test_skill_structure.py   # skill sections, per-step checks, sentinel contract, no re-save wording
-tests/acceptance/test_sentinel_parse.py    # 7 parse cases for ORDER_TOTAL / FAILED_STEP
-tests/acceptance/test_step3_checks.py      # step 3 = URL + inventory-list, no header/sidebar/menu checks
-tests/acceptance/test_item_checks.py       # steps 7/12 demand full item names; wrong-item tamper caught
-tests/acceptance/test_offsite_block.py     # is_allowed_url unit cases + live loopback abort/popup-close
-tests/acceptance/test_hooks_unit.py        # 25-case navigation URL matrix, Read guard, log shape
+.venv/bin/python tests/acceptance/test_skill_structure.py   # skill sections, per-step checks, sentinel contract, no re-save wording
+.venv/bin/python tests/acceptance/test_sentinel_parse.py    # 7 parse cases for ORDER_TOTAL / FAILED_STEP
+.venv/bin/python tests/acceptance/test_step3_checks.py      # step 3 = URL + inventory-list, no header/sidebar/menu checks
+.venv/bin/python tests/acceptance/test_item_checks.py       # steps 7/12 demand full item names; wrong-item tamper caught
+.venv/bin/python tests/acceptance/test_offsite_block.py     # is_allowed_url unit cases + live loopback abort/popup-close
+.venv/bin/python tests/acceptance/test_hooks_unit.py        # 25-case navigation URL matrix, Read guard, log shape
 ```
 
 ## MCP tools
@@ -80,6 +79,8 @@ tests/acceptance/test_hooks_unit.py        # 25-case navigation URL matrix, Read
 `mcp_server.py` exposes two tools over `create_sdk_mcp_server`:
 - `record_workflow` — runs the recorder; returns `recorded; skill file at skills/saucedemo_checkout.md; recorded total Total: $19.42`.
 - `replay_workflow` — runs the replay agent; returns `total=$19.42 failed_step=None` (or `failed_step=<n>`).
+
+These tools run in-process via the Agent SDK; `mcp_server.py` is a demo that calls both, and there is no standalone stdio server.
 
 `browser_tools.py` is the MCP server the replay agent itself gets: `browser_load_session`
 (start from `artifacts/state.json`), `browser_goto`, `browser_click`, `browser_fill`,
