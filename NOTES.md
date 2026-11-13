@@ -1,107 +1,79 @@
-# NOTES — what broke and how it got fixed
+# NOTES
 
-## Second rewrite: observed steps instead of a hardcoded list (2026-11-11)
+## 1. What broke, and how I fixed it
 
-**Broke:** the recorder wrote a hand-maintained `steps = [...]` list — nothing was actually
-"recorded"; the recording was a transcription of the script that produced it. **Fixed:** an
-injected init script listens for real `click`/`input`/`change` events (capture phase, so the
-page snapshot is pre-action), each event target is described and located (data-test >
-role+name > label > placeholder > text > css id), checks are derived by diffing before/after
-page state, and the skill `.md` is rendered by the recorder from the observed steps.
-Verified: two consecutive recorder runs produced byte-identical `steps.json`.
+- **recorder.py lost with no commits.** Found at the 2026-11-11 session start: zero commits, file
+  nowhere on disk. Rebuilt against the contracts the other files impose.
+- **data-test vs data-testid.** Found on the first recorder run: every test-id locator missed.
+  saucedemo uses `data-test`; Playwright defaults to `data-testid`. Fixed with
+  `set_test_id_attribute("data-test")` in recorder.py and browser_tools.py.
+- **camelCase checkout ids.** Found on the first run: fill of `first-name` timed out — the ids
+  are `firstName`/`lastName`/`postalCode`. Fixed in the demonstrator actions.
+- **Hardcoded steps list.** Found by the QA audit (reports/QA_REPORT.md): the "recording" was a
+  transcription of its own script. Fixed by the observed-events rewrite (init script listens to
+  real clicks/inputs; checks diff before/after snapshots). Verified: two recorder runs produce
+  byte-identical steps.json and skill.
+- **Tamper hole: the Do line named the option.** Found by the audit (task 10b): `lohi` appeared
+  in the skill's Do line, so a literal flip of the locator left the Do line — or vice versa —
+  still satisfiable. Fixed: the option now comes only from the step's locator line.
+- **Cart leaking through saved storage state.** Found while placing the session save: saving at
+  run end would carry the cart (localStorage) into the next replay. Fixed: save right after
+  login, before any cart change.
+- **ORDER_TOTAL sentinel never defined.** Found by the audit (defect 1): replayer.py parsed
+  sentinels the skill never defined, so every replay returned total=None. Fixed (Fix 1): the
+  skill gained an Output section (`ORDER_TOTAL: $X.XX` / `FAILED_STEP: <n>`), replayer gained a
+  tolerant `parse_result`. Verified by a real replay ending `ORDER_TOTAL: $19.42`.
+- **Transient menu-open text in step 3 checks.** Found by the audit (defect 2): the login step's
+  checks embedded a burger-menu DOM flash and could never pass; fresh-login replays R4/R5
+  halted there. Fixed (Fix 2): header/menu/sidebar testids are filtered out of derived checks;
+  step 3 anchors on URL + `inventory-list`. Fresh login now passes step 3 (seen in this
+  session's pass-test run 3).
+- **Off-site clicks not blocked.** Found by the audit (defect 3): the hook guarded only
+  `browser_goto`; the route handler never aborted. Fixed (Fix 3): context-level route aborts
+  non-saucedemo requests and off-site popups are closed. Regression from that fix: the edit
+  dropped the `_ok` helper, so every browser tool raised `NameError` — found by this session's
+  verification runs (MCP demo and direct replay failed with `name '_ok' is not defined`; the
+  offline tests missed it because they bypass the tool wrappers), fixed by restoring the helper.
+- **Wrong second item passing the checks.** Found by the audit (defect 4): cart checks pinned
+  badge counts and 80-char truncated text. Fixed (Fix 4): steps 7 (cart) and 12 (overview)
+  demand each recorded item's full name; `test_item_checks.py` evaluates the wrong-item tamper
+  fixture offline and it is caught.
+- **Unrestricted outer MCP agent.** Found by the audit (P2): the demo sets only `allowed_tools`.
+  Confirmed live this session: during the demo the outer agent ran `Bash` and attempted `Read`s.
+  Not yet fixed — `mcp_server.demo()` needs `disallowed_tools`; untouched by design this session.
 
-**Broke:** saving the storage state at the end of the run would carry the cart
-(localStorage) into the next replay. **Fixed:** the session is saved right after login —
-`ctx.storage_state()` immediately after `wait_for_url("**/inventory.html")`, before any cart
-change.
+## 2. What I verified (this session, real numbers)
 
-**Broke:** `get_by_test_id` looks for `data-testid` by default; saucedemo uses `data-test`,
-so every test-id locator would miss. **Fixed:** `pw.selectors.set_test_id_attribute("data-test")`
-in both the recorder and the replay browser tools.
+- **PASS 1 (same total twice):** `run 1: total=19.42 failed=None`, `run 2: total=19.42
+  failed=None`, `PASS 1: True`. Five clean replays this session (verification replay, MCP demo,
+  pass runs 1-2) all returned $19.42.
+- **PASS 2 (tamper caught): NOT this run.** The tampered (`lohi`->`hilo`) replay returned
+  `total=19.42 failed=None` → `PASS 2: False`. The tool log shows why: it did a fresh login,
+  selected hilo once, read `active-option`, then added the item-pinned `onesie` + `bike-light`
+  anyway and completed. The add-to-cart locators pin specific items, so the tamper never
+  changed the cart, and this run's agent did not stop at the failing sort check. Earlier audit
+  replays of the same tamper did halt — the outcome is model-dependent.
+- **Hook URL table:** `test_hooks_unit.py` 33/33 PASS — 25-case navigation matrix (userinfo,
+  subdomain-lookalike, decimal/hex IP, protocol-relative tricks), 8 Read-guard cases, log-shape
+  checks; host matching is `urlparse(...).hostname` equality/suffix.
+- **Audited verification replay:** total $19.42, 250.3s, 31 tool calls; hook-log reconciliation
+  31=31, sequences identical, 0 blocked.
+- **Offline suites:** sentinel parse 7/7; off-site block 12 unit cases + live loopback (0
+  requests reached the server, popup closed); step-3 checks 3/3; item checks incl. tamper
+  caught; skill structure all PASS (incl. the no-re-save assertion).
+- **Recorder determinism:** steps.json and skill byte-identical across double runs (re-verified
+  in Fixes 1, 2, 4, 5). MCP demo (post-repair): recorded $19.42, replayed $19.42.
 
-**Known-hardcoded / fragile (accepted for the demo):**
+## 3. What I would change next
 
-- Add-to-cart locators are item-specific (`add-to-cart-sauce-labs-onesie`,
-  `add-to-cart-sauce-labs-bike-light`): "the two cheapest" lives in the step's intent text
-  and the sort checks, not in the locator.
-- Checks embed literal captured values, including the exact order total (`Total: $19.42`).
-  Snapshot texts are truncated to 80 chars, capped at 5 checks per step, and taken in DOM
-  order rather than by relevance. The read step's fallback locator
-  (`get_by_text("Total: $19.42", exact=True)`) bakes the literal total in a second time.
-- The demonstrator is still a script driving the browser — a human is simulated, not watched.
-- The Goal and "When a check fails" sections of the skill come from `render_skill`'s
-  template; only the steps themselves are observed.
-- The login-skip rule ("skip steps 1-N") is a heuristic: every step that starts on the same
-  URL as step 1 counts as login.
-- The `get_by_role("button", name="Add to cart")` fallbacks match several buttons at once;
-  if a primary test-id locator ever fails, the fallback trips Playwright's strict-mode limit.
-
-**Fallout of the rewrite, fixed in the same pass:**
-
-- `mcp_server.py` still imported the old `record()` / `skill_gen.generate()` — plain
-  `ImportError`. Rewired to the new `recorder.record()`; `skill_gen.py` (old template
-  pipeline) removed, since the recorder writes the skill itself.
-- The tamper target in `run_pass_test.py` (`` `lohi` (Price: low to high) ``) no longer
-  existed in the regenerated skill, so PASS 2 aborted at its assert. Retargeted to flipping
-  `Select "Price (low to high)" (value \`lohi\`)` to `hilo` — caught by the step-4 derived
-  checks.
-- The tampered fixture moved from `skills/` to `tests/fixtures/` (it is a test input, not a
-  skill the agent should normally read), and the Read guard in `hooks.py` now also allows
-  `tests/fixtures/*.md` — otherwise the guarded agent could not read the fixture and PASS 2
-  would fail for the wrong reason.
-
-## First full run: the hardcoded-steps pipeline (2026-11-11)
-
-### Breakage encountered and fixed
-
-1. **`recorder.py` was gone.** The previous session never saved it — repo had zero commits and
-   the file existed nowhere on disk. Rebuilt against the contract the other files impose:
-   `record()` returns `{"total": ...}`, writes `artifacts/steps.json` with
-   `{n, title, action, locator, check, on_fail}` per step, saves `artifacts/state.json`
-   (storage state saved *after* checkout, so it's logged-in with an empty cart — the skill's
-   stated precondition), and step 3's locator carries the exact string
-   `` `lohi` (Price: low to high) `` that `run_pass_test.py` tampers.
-
-2. **SauceDemo's checkout form uses camelCase test ids** (`firstName`, `lastName`,
-   `postalCode`) while the rest of the site is kebab-case (`shopping-cart-link`,
-   `product-sort-container`). First recorder run timed out filling `first-name` on
-   checkout-step-one. Fixed ids in both the recorder actions and the recorded step 6 text.
-
-3. **Tamper test had a hole in the skill text.** Step 3 originally named the option value in
-   both the *Do* line and the *Locator* line; `run_pass_test.py` only rewrites the Locator, so
-   an obedient agent following the *Do* line would still have sorted `lohi` and passed — the
-   tamper would have gone undetected. Fix: the *Do* line now says "choose exactly the option
-   named in the Locator", so the tampered Locator is the only source of truth. Verified:
-   `lohi` occurs exactly once in the generated skill, and PASS 2 now fails at step 3 as
-   intended.
-
-### What worked first try
-
-- The whole Agent SDK surface that was written from memory against the installed
-  `claude-agent-sdk` (Python 3.14): `@tool(name, desc, {param: type})`,
-  `create_sdk_mcp_server(name, version, tools)`, `HookMatcher(hooks=[...])`,
-  the PreToolUse deny shape (`hookSpecificOutput.permissionDecision`), `SdkMcpTool.name`,
-  and the `ClaudeAgentOptions` fields used (`mcp_servers`, `allowed_tools`,
-  `disallowed_tools`, `hooks`, `max_turns`).
-- SDK auth via the existing Claude Code login (no `ANTHROPIC_API_KEY` set).
-- The nested-client pattern in `mcp_server.py`: a `ClaudeSDKClient` created inside an MCP
-  tool callback of another client ran the full replay without deadlock.
-
-### Observed behavior worth keeping
-
-- The replay agent's first move was to try `Read artifacts/state.json`; the guard hook denied
-  it and the agent adapted to `browser_load_session` — exactly the design intent. 21 tool
-  calls logged in `logs/tool_calls.jsonl`, 1 blocked.
-- `logs/network.jsonl` caught checkout-phase requests via the `/checkout-` URL substring
-  (e.g. the thank-you checkmark image on `checkout-complete.html`).
-
-### Quirk
-
-- The SDK-spawned CLI logs `[claude-code:unrecognized_model]` for this environment's model
-  name and falls back to its default. Harmless, but the replay agent's model is whatever the
-  CLI defaults to — pass `model=` in `ClaudeAgentOptions` to pin it.
-
-### Still open
-
-- The brief's harder option is not implemented: no deliberately failing request with the
-  retry rule recovering. `logs/network.jsonl` logging (the easier option) is what ships.
+- Make the demonstrator a real human recording, not a script.
+- Remove literal values from checks (the embedded total, menu texts).
+- Replace item-specific add-to-cart locators with an intent-based "two cheapest" rule — this
+  also removes PASS 2's blind spot, since the tamper would then actually change the cart.
+- Implement the harder network option: a deliberately failing request with the retry rule
+  recovering it.
+- Add a tool to re-save the session mid-flow (the skill no longer promises it, but a >10-min
+  run still ends with a stale state file).
+- Pin the replay model (`model=` in ClaudeAgentOptions); PASS 2's instability argues for it.
+- Point run_replay.py's duplicated parse at `replayer.parse_result`, and add `disallowed_tools`
+  to the MCP demo agent.

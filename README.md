@@ -1,123 +1,120 @@
 # watch-then-repeat
 
-Watch a browser workflow once, turn it into a skill file, and let an agent repeat it: guarded, deterministic and verifiable.
+Watch a browser workflow once, turn what was actually observed into a skill file, and let an
+Agent SDK agent repeat it using nothing but that file. Demo workflow: a saucedemo.com
+checkout — login, sort by price (low to high), add the two cheapest items, check out, read
+the order total.
 
-Demo target: https://www.saucedemo.com (the Sauce Labs demo store, demo credentials only).
-
-Short notes on what broke, how it was fixed and what I would change next are in [NOTES.md](NOTES.md). The full audit is in `reports/QA_REPORT.md`.
-
-## How it fits together
-
-```
-recorder.py      one scripted run: login -> sort low-to-high -> buy the 2 cheapest -> checkout -> thank you.
-                 The run is OBSERVED (real DOM events), not transcribed from the script. Writes:
-                   recordings/saucedemo_checkout/steps.json   observed steps
-                   recordings/saucedemo_checkout/trace.zip    Playwright trace of the run
-                   skills/saucedemo_checkout.md               the ONLY file the replay agent reads
-                   artifacts/state.json                       storage state, saved right after login
-
-replayer.py      Claude Agent SDK agent that reads only the skill file, with browser MCP tools
-                 and a PreToolUse guard hook. Its last line is ORDER_TOTAL: $X.XX or FAILED_STEP: <n>.
-
-mcp_server.py    exposes record_workflow / replay_workflow as MCP tools; the demo runs record + replay.
-
-run_pass_test.py PASS 1: replay twice, same total?   PASS 2: tampered skill, caught?
-```
+`recorder.py` drives the site once with a scripted demonstrator while an injected init script
+listens to real DOM events (capture phase, so page snapshots are pre-action). From those
+events it derives steps, locators, and checks, and writes `skills/saucedemo_checkout.md` —
+the only file the replay agent reads. `replayer.py` is a Claude Agent SDK agent with eight
+browser MCP tools and a PreToolUse guard hook; it follows the skill, verifies each check,
+and ends its reply with a sentinel line: `ORDER_TOTAL: $X.XX` on success, `FAILED_STEP: <n>`
+on failure. Everything is regenerated from the recording — two recorder runs in a row
+produce byte-identical `steps.json` and skill files (verified repeatedly this session).
 
 ## Setup
 
-- Python virtualenv at `.venv` with `playwright` and `claude-agent-sdk` installed, and Chromium installed (`.venv/bin/playwright install chromium`).
-- SDK auth: either `export ANTHROPIC_API_KEY=...` or an existing Claude Code login (the SDK reuses it).
-- No other secrets are needed. The site's demo credentials are in the recorder.
+Repo root as working directory. Python 3.14 (built and run on 3.14.7).
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt     # playwright + claude-agent-sdk
+.venv/bin/playwright install chromium
+```
+
+Auth: the SDK reuses an existing Claude Code login; there is no API key in the repo and none
+needs to be exported. `HEADED=1` before a replay command shows the browser.
 
 ## Run
 
-### Recorder
-
-```
+```bash
 .venv/bin/python recorder.py
-```
+# -> wrote recordings/saucedemo_checkout/ (14 steps, total Total: $19.42) and skills/saucedemo_checkout.md
 
-Writes `recordings/`, `skills/saucedemo_checkout.md` and `artifacts/state.json`. Two runs produce a byte-identical `steps.json` and skill `.md`. `trace.zip` is not deterministic. Inspect it with:
-
-```
-.venv/bin/playwright show-trace recordings/saucedemo_checkout/trace.zip
-```
-
-### Replayer
-
-```
 .venv/bin/python replayer.py
-```
+# -> agent replays the skill in a real browser; last lines:
+#    ORDER_TOTAL: $19.42 / TOTAL: 19.42 | FAILED STEP: None
 
-Set `HEADED=1` to watch the browser.
-
-- **Session precondition.** The skill tells the agent to skip steps 1-3 if a saved session is valid. The saved session expires after about 10 minutes, so refresh it right before a replay (`.venv/bin/python refresh_session.py`). With no valid session the agent logs in and runs steps 1-3.
-- **Output contract.** The agent ends its final reply with exactly one line: `ORDER_TOTAL: $X.XX` on success, or `FAILED_STEP: <n>` on failure. The replayer parses that line. Prose without it counts as no total.
-
-### MCP server
-
-```
 .venv/bin/python mcp_server.py
+# -> MCP demo: one agent calls record_workflow then replay_workflow; reports both totals ($19.42).
+
+.venv/bin/python run_pass_test.py
+# -> run 1: total=19.42 failed=None
+#    run 2: total=19.42 failed=None
+#    PASS 1 (same total twice): True
+#    tampered: total=<19.42 or None> failed=<None or step>
+#    PASS 2 (check caught the change): True or False — model-dependent, see NOTES
+
+tests/acceptance/run_audit.sh                  # deterministic phases only (~15 min, no model)
+tests/acceptance/run_audit.sh --with-replays   # adds 6 agent replays (~60-90 min)
+# -> per-phase PASS output; ends "Deterministic phases done (FAILURES=0)."
 ```
 
-Runs the demo: it records, then replays, through the MCP tools `record_workflow` and `replay_workflow`.
+Replays need a fresh session: the saucedemo cookie expires after ~10 minutes. Refresh it
+first (scripted login, no model; also verifies logged-in + empty cart):
 
-## Safety model
+```bash
+.venv/bin/python tests/acceptance/refresh_session.py   # -> "VERDICT": "logged-in, cart EMPTY"
+```
 
-- The replay agent reads only the skill file. `hooks.py` logs every tool call to `logs/tool_calls.jsonl`, blocks navigation to non-saucedemo hosts, and restricts `Read` to `skills/*.md` and `tests/fixtures/*.md`.
-- `browser_tools.py` is the agent's only browser. Its context aborts every request whose host is not exactly `saucedemo.com` or `www.saucedemo.com` (plus `about:blank`, `data:` and `blob:`), and closes any tab that ends up on another host. Each blocked URL is logged to `logs/network.jsonl`.
-- `artifacts/state.json` holds session cookies and localStorage. It is gitignored and regenerated by every recorder run. Never commit it.
+Offline tests (no model, no browser or local-only):
 
-## How the recorder works
+```bash
+tests/acceptance/test_skill_structure.py   # skill sections, per-step checks, sentinel contract, no re-save wording
+tests/acceptance/test_sentinel_parse.py    # 7 parse cases for ORDER_TOTAL / FAILED_STEP
+tests/acceptance/test_step3_checks.py      # step 3 = URL + inventory-list, no header/sidebar/menu checks
+tests/acceptance/test_item_checks.py       # steps 7/12 demand full item names; wrong-item tamper caught
+tests/acceptance/test_offsite_block.py     # is_allowed_url unit cases + live loopback abort/popup-close
+tests/acceptance/test_hooks_unit.py        # 25-case navigation URL matrix, Read guard, log shape
+```
 
-An init script injected into the page listens (capture phase) for real `click`, `input` and `change` events. It describes each event's target element and snapshots the page (URL plus visible text of every `[data-test]` element) before the action's handlers run.
+## MCP tools
 
-- **Locators.** Priority per step: `data-test` id, then role + accessible name, label, placeholder, text, css id. The first is the step's Locator and the rest are Fallbacks.
-- **Checks.** They are derived by diffing the before and after snapshots (URL change, changed `[data-test]` texts, filled value), not written by hand. Site chrome (testids containing `header`, `menu` or `sidebar`) is dropped from the diff because it changes between runs. A navigation step left with no text check is pinned to the page's content list (`inventory-list` after login).
-- **Skill file.** The recorder writes it (`render_skill`). Only the Goal, Output and "When a check fails" sections come from a fixed template.
-- **Test id.** `pw.selectors.set_test_id_attribute("data-test")` is required: saucedemo uses `data-test`, Playwright's default is `data-testid`.
-- **Storage state.** It is saved right after login, while the cart is still empty. Saved later, the cart in localStorage would carry into the next replay.
+`mcp_server.py` exposes two tools over `create_sdk_mcp_server`:
+- `record_workflow` — runs the recorder; returns `recorded; skill file at skills/saucedemo_checkout.md; recorded total Total: $19.42`.
+- `replay_workflow` — runs the replay agent; returns `total=$19.42 failed_step=None` (or `failed_step=<n>`).
 
-## Tests
+`browser_tools.py` is the MCP server the replay agent itself gets: `browser_load_session`
+(start from `artifacts/state.json`), `browser_goto`, `browser_click`, `browser_fill`,
+`browser_select`, `browser_read_text`, `browser_all_texts`, `browser_url`. Each returns a
+short status line (`at <url>`, `clicked; url=<url>`, element text, page URL). All requests
+run through a context-level allowlist: non-saucedemo requests are aborted and logged to
+`logs/network.jsonl`; off-site popups are closed.
 
-All of these run without a model unless noted.
+## Layout
 
-| Command | What it checks |
-| --- | --- |
-| `.venv/bin/python tests/acceptance/test_skill_structure.py` | the skill has all 14 steps and its required sections |
-| `.venv/bin/python tests/acceptance/test_sentinel_parse.py` | `ORDER_TOTAL` / `FAILED_STEP` parsing |
-| `.venv/bin/python tests/acceptance/test_step3_checks.py` | step 3 has no chrome checks and keeps the URL + `inventory-list` |
-| `.venv/bin/python tests/acceptance/test_offsite_block.py` | the host allow-list and, with a local server, that off-site requests and popups are blocked |
-| `bash tests/acceptance/run_audit.sh` | the full audit harness, about 15 minutes |
-| `.venv/bin/python run_pass_test.py` | uses the model. PASS 1: two replays return the same total. PASS 2: a tampered skill returns no total and a failed step |
+| file | role |
+|---|---|
+| `recorder.py` | DOM-event observer + scripted demonstrator; steps -> locators -> derived checks -> skill .md |
+| `replayer.py` | the guarded replay agent; parses the sentinel from the final reply |
+| `browser_tools.py` | the agent's 8 browser tools; context-level off-site request abort + popup guard |
+| `hooks.py` | PreToolUse hook: logs every call, blocks non-saucedemo `browser_goto`, restricts `Read` to `skills/*.md` and `tests/fixtures/*.md` |
+| `mcp_server.py` | record_workflow / replay_workflow as MCP tools + demo |
+| `run_pass_test.py` | the two pass criteria (same total twice; tampered skill caught) |
+| `skills/` | generated skill files — the replay agent's only input |
+| `recordings/` | `steps.json` (observed steps) + `trace.zip` per recording |
+| `artifacts/` | gitignored; `state.json` session storage, regenerated by every recorder run |
+| `logs/` | `tool_calls.jsonl` (every tool call, blocked or not), `network.jsonl` (checkout requests + blocked requests) |
+| `tests/` | offline acceptance tests, tamper fixtures, audit runner |
+| `reports/` | QA report and evidence |
 
-### Pass criteria
+## How the brief's requirements are met
 
-- **PASS 1.** The agent replays the skill twice. Both runs must return the same order total (`$19.42` on the demo store).
-- **PASS 2.** `run_pass_test.py` writes a copy of the skill to `tests/fixtures/` with the sort step flipped to high-to-low and replays it. The run must return no total and a failed step, because the sort check (`active-option` shows "Price (low to high)") no longer holds.
-
-## Files
-
-| File | Role |
-| --- | --- |
-| `recorder.py` | observer and scripted demonstrator: DOM events, steps, derived checks, skill `.md` |
-| `recordings/saucedemo_checkout/` | committed copy of the recording: `steps.json`, `trace.zip` |
-| `skills/saucedemo_checkout.md` | the skill the replay agent follows |
-| `browser_tools.py` | the agent's only browser tools, with the host allow-list and popup guard |
-| `hooks.py` | PreToolUse guard hook |
-| `replayer.py` | the guarded replay agent and the result parser |
-| `mcp_server.py` | record/replay as MCP tools, plus the demo |
-| `refresh_session.py` | logs in again and saves a fresh `artifacts/state.json` |
-| `run_pass_test.py` | the two pass criteria |
-| `tests/acceptance/` | offline tests and the audit harness |
-| `tests/fixtures/` | tampered copies of the skill used by the tests |
-| `reports/QA_REPORT.md` | the QA audit report and its evidence |
-| `logs/tool_calls.jsonl` | every tool call, blocked or not |
-| `logs/network.jsonl` | requests made on `/checkout-*` pages, and every blocked URL |
+- **Locators**: priority `data-test` > role+name > label > placeholder > text > css id, with fallbacks per step (`recorder.py pick_locators`).
+- **Checks**: derived by diffing before/after snapshots, capped at 5, chrome (header/menu/sidebar) excluded; step 3 anchors on URL + `inventory-list`; steps 7/12 add full item-name checks (`recorder.py derive_checks`, `add_item_name_checks`).
+- **Session handling**: storage state saved right after login, before any cart change (`recorder.py`); replay loads it via `browser_load_session`; skill skips login steps when valid (`render_skill`).
+- **Navigation hook**: `browser_goto` to non-saucedemo hosts denied by the PreToolUse hook (`hooks.py`), plus a context-level route that aborts off-site requests and closes off-site popups (`browser_tools.py`).
+- **Logging hook**: every tool call appended to `logs/tool_calls.jsonl` with tool, input, timestamp, blocked flag (`hooks.py`).
+- **Network interception**: requests on `/checkout-*` pages logged to `logs/network.jsonl` (`browser_tools.py _route`).
+- **Pass test**: same total twice (PASS 1 — stable, passed every run). PASS 2 (tampered skill caught) is design-intent and model-dependent: the tampered `lohi`->`hilo` skill fails the sort step's derived checks, but only an obedient agent stops there (`run_pass_test.py`; observed both outcomes this session).
+- **Tamper test**: wrong-item and altered-check fixtures under `tests/fixtures/`; `test_item_checks.py` evaluates the wrong-item one offline against the item-name checks (caught).
 
 ## Known limits
 
-- The session expires after about 10 minutes and the agent has no tool to save a new one. Runs are short, and the replay needs a fresh session to skip login.
-- The replay is specific to this site and flow. Some checks use item-specific text.
-- The two host allow-lists differ: `hooks.py` allows `*.saucedemo.com`, `browser_tools.py` allows exactly two hosts.
+- The saucedemo session cookie expires after ~10 minutes; runs longer than that fall back to a fresh login mid-flow.
+- Add-to-cart locators are item-specific (`add-to-cart-sauce-labs-onesie`, `add-to-cart-sauce-labs-bike-light`); "two cheapest" lives in the sort + intent, not the locator. Consequence: the sort tamper in PASS 2 does not change which items the locators add, and catching it rests on the agent stopping at the failing sort check — in this session's run it did not.
+- Only the easier network option ships: request logging on checkout pages. No deliberately failing request with retry recovery.
+- The replay model is whatever the local CLI defaults to (the SDK logs `unrecognized_model` for this environment); it is not pinned.
+- The MCP demo's outer agent is not tool-restricted beyond `allowed_tools`; `Bash` is not in its disallowed list.
