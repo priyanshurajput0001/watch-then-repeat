@@ -276,7 +276,7 @@ def render_skill(steps, start_url, state_path, title="Workflow", result_name="or
          f"- If the session is valid, open the site with it and **skip steps 1-{login_n}** (login).",
          "- A **fresh login is needed** when: the state file is missing, or opening a protected "
          "page redirects to the login page, or the login form is visible. Then run steps "
-         f"1-{login_n} and re-save the session.",
+         f"1-{login_n}.",
          "- Cart must be empty before step "
          f"{login_n + 1}. Only ever allow navigation within the start URL's domain.", "",
          "## Steps", "Use auto-waiting actions only; no fixed sleeps. Try locators in the listed order.", ""]
@@ -289,7 +289,7 @@ def render_skill(steps, start_url, state_path, title="Workflow", result_name="or
         L.append("")
     L += ["## When a check fails",
           "1. Re-run the step's locator fallbacks once, then wait for the check condition (auto-wait, max ~10s).",
-          "2. If the URL is the login page, the session expired: do a fresh login, re-save the session, "
+          "2. If the URL is the login page, the session expired: do a fresh login, "
           "restart from the first non-login step.",
           "3. If a check still fails, **stop**. Do not improvise or skip ahead. Report the step number, "
           "the expected check and what the page actually shows.",

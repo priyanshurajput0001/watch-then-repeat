@@ -24,6 +24,8 @@ def main():
         ("Empty-cart precondition", "cart must be empty" in t.lower()),
         ("Domain restriction stated", "navigation within" in t.lower() or "never navigate outside" in t.lower()),
         ("No-sleep rule stated", "no fixed sleeps" in t.lower()),
+        ("No re-save-session instruction (no tool can save the session)",
+         "re-save" not in t.lower() and "save the session" not in t.lower()),
     ]
     # per-step check lines: every numbered step body has at least one "Check:"
     m = re.search(r"^## Steps\b(.*?)^## When a check fails", t, re.M | re.S)
