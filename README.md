@@ -19,6 +19,30 @@ and ends its reply with a sentinel line: `ORDER_TOTAL: $X.XX` on success, `FAILE
 on failure. Everything is regenerated from the recording (two recorder runs give
 byte-identical `steps.json` and skill files).
 
+## Architecture
+
+Two agents, two custom MCP servers — all built in-process with `create_sdk_mcp_server`; no
+third-party MCP server is used, and there is no standalone stdio server. Neither agent sets a
+model (see Known limitations).
+
+- The **outer demo agent** is `mcp_server.py demo()`. Its tools are the two tools of the
+  `saucedemo` server (defined in `mcp_server.py`): `record_workflow` and `replay_workflow`.
+- The **replayer agent** is `replayer.py replay()`. It reads only the skill file and drives the
+  site through the `browser` server (`browser_tools.py`, eight tools), plus the built-in `Read`,
+  which the PreToolUse hook limits to `.md` files in `skills/` and `tests/fixtures/`.
+- The recorder itself is a scripted Playwright demonstrator, not an agent.
+
+```
+demo agent (mcp_server.py) -- outer
+  |
+  +-- MCP server "saucedemo" (ours): record_workflow, replay_workflow
+        |-- record_workflow --> recorder.py (scripted Playwright demonstrator, no model)
+        +-- replay_workflow  --> replayer agent (replayer.py; reads ONLY the skill file)
+              |
+              +-- MCP server "browser" (ours, 8 tools) --> Chromium
+                    (context-level route: saucedemo.com requests only; the rest abort + log)
+```
+
 ## Setup
 
 Repo root as working directory. Python 3.14 (built and run on 3.14.7).
@@ -109,18 +133,23 @@ run through a context-level allowlist: non-saucedemo requests are aborted and lo
 ## How the brief's requirements are met
 
 - **Locators**: priority `data-test` > role+name > label > placeholder > text > css id, with fallbacks per step (`recorder.py pick_locators`).
+- **Item selection**: locator-driven, not intent-driven. Steps 5–6 identify items by their recorded `add-to-cart-<slug>` testids; the intent line ("Add the two cheapest items (first two after sorting)") is annotation the agent is not told to act on (`recorder.py demonstrate` + `render_skill`).
 - **Checks**: derived by diffing before/after snapshots, capped at 5, chrome (header/menu/sidebar) excluded; step 3 anchors on URL + `inventory-list`; steps 7/12 add full item-name checks (`recorder.py derive_checks`, `add_item_name_checks`).
 - **Session handling**: storage state saved right after login, before any cart change (`recorder.py`); replay loads it via `browser_load_session`; skill skips login steps when valid (`render_skill`).
 - **Navigation hook**: `browser_goto` to non-saucedemo hosts denied by the PreToolUse hook (`hooks.py`), plus a context-level route that aborts off-site requests and closes off-site popups (`browser_tools.py`).
 - **Logging hook**: every tool call appended to `logs/tool_calls.jsonl` with tool, input, timestamp, blocked flag (`hooks.py`).
-- **Network interception**: requests on `/checkout-*` pages logged to `logs/network.jsonl` (`browser_tools.py _route`).
+- **Network interception**: one context-level route (`browser_tools.py _route`) aborts non-saucedemo requests (logged) and logs every request made while a `/checkout-` page is active to `logs/network.jsonl`. Requests are never failed deliberately; there is no retry path yet.
 - **Pass test**: same total twice (PASS 1), then the tampered `lohi`->`hilo` skill must return no total and a failed step (PASS 2). Final run: PASS 1 True (19.42 twice) and PASS 2 True (tampered run stopped at step 4: `total=None failed=4`), enforced by the hard stop rule plus strict sort checks (`run_pass_test.py`).
 - **Tamper test**: wrong-item and altered-check fixtures under `tests/fixtures/`; `test_item_checks.py` evaluates the wrong-item one offline against the item-name checks (caught).
 
-## Known limits
+## Known limitations
 
 - The saucedemo session cookie expires after ~10 minutes; runs longer than that fall back to a fresh login mid-flow.
-- Add-to-cart locators are item-specific (`add-to-cart-sauce-labs-onesie`, `add-to-cart-sauce-labs-bike-light`); "two cheapest" lives in the sort + intent, not the locator. The tamper now fails the strict step 4 checks and the hard stop rule ends the run, but a cleverer agent could still reason past a stop instruction.
-- Only the easier network option ships: request logging on checkout pages. No deliberately failing request with retry recovery.
-- The replay model is whatever the local CLI defaults to (the SDK logs `unrecognized_model` for this environment); it is not pinned.
-- The MCP demo's outer agent is not tool-restricted beyond `allowed_tools`; `Bash` is not in its disallowed list.
+- Item selection is locator-driven, not intent-driven: steps 5–6 pin the recorded items (`add-to-cart-sauce-labs-onesie`, `add-to-cart-sauce-labs-bike-light`) even though their intent line says "Add the two cheapest items". Intended design: the skill states the intent ("add the cheapest items") with supporting evidence (the sorted prices it observed), and the replayer resolves it against the live page — adding whichever two items are cheapest now. That is the point of "watch, then repeat": repeat the outcome under the current page, not re-click recorded coordinates that may no longer select the cheapest items. It also makes the same-order-total check honest: today a flipped sort is caught only by the strict step 4 checks plus the hard stop rule (a cleverer agent could still reason past a stop instruction); with intent-based selection the wrong sort would change the cart and the total themselves.
+- The replay model is not pinned: neither agent passes `model=` to `ClaudeAgentOptions`, so replays run on whatever the local CLI defaults to (the SDK logs `unrecognized_model` for this environment). It should be pinned to an exact model string — reproducible replays are the point of watch-then-repeat, and an unpinned default can change behavior between runs.
+- The MCP demo's outer agent is restricted only by `allowed_tools` (the two saucedemo tools); `disallowed_tools` is unset, so it is not hard-blocked from other tools (`Bash` included). Intended: restrict it to an allowlist of our MCP tools only. The PreToolUse hook already logs every call and blocks non-saucedemo `browser_goto` and non-skills/fixtures `Read`, but it does not block `Bash` or other built-ins.
+- Only the easier network option ships: request logging on checkout pages. No deliberately failing request with retry recovery (see Planned improvements).
+
+## Planned improvements
+
+- **Failing request + retry (the harder network option).** Deliberately fail one checkout request the first time it is seen, allow the retry, cap the retries (bounded, e.g. two attempts), and log every attempt (fail → retry → ok) to `logs/network.jsonl`. The order total must come out unchanged: the replay recovers from a transient failure without altering the outcome. Gated behind a flag (e.g. `FAIL_NETWORK=1`) so default runs stay deterministic.

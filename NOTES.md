@@ -29,7 +29,7 @@
 - Make the demonstrator a real human recording, not a script.
 - Remove literal values from checks (the embedded total; checks still embed captured values such as step 4's prices and the option label).
 - Replace item-specific add-to-cart locators with an intent-based "two cheapest" rule — the tamper would then actually change the cart.
-- Implement the harder network option: a deliberately failing request with the retry rule recovering it.
+- Implement the harder network option: a deliberately failing request with the retry rule recovering it (fail the first attempt, allow bounded retries with each attempt logged, order total unchanged, behind a flag so default runs stay deterministic).
 - Add a tool to re-save the session mid-flow.
 - Pin the replay model (`model=` in ClaudeAgentOptions).
 - Point run_replay.py's duplicated parse at `replayer.parse_result`; the outer MCP demo agent is still unrestricted (`mcp_server.py` sets only `allowed_tools`, no `disallowed_tools`) — add it there.
